@@ -1,39 +1,39 @@
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { privateRoutes, publicRoutes } from '../../routes';
-import Login from '../Login';
-import Main from '../Main';
+import { MAIN_ROUTE } from '../../utils/consts';
+import { LOGIN_ROUTE } from '../../utils/consts';
+
 
 const AppRouter = () => {
   const user = false; // временное решение для авторизованных / не авторизованных пользователей
 
   return user ?
     (
-        <>
-        1
-        <Main />
         <Switch>
             {privateRoutes.map(({path, Component}) => 
-               <Route path={path} component={Component} exact={true} /> 
+                <Route key={Component}
+                       path={path}
+                       component={Component}
+                       exact={true} /> 
             )}
-            <Redirect to={Main} />
+            <Redirect to={MAIN_ROUTE} />
         </Switch>
-        </>
     )
     :
     (
-        <>
-        2
-        <Login />
         <Switch>
             {publicRoutes.map(({path, Component}) => 
-               <Route path={path} component={Component} exact={true} /> 
+                <Route key={Component}
+                       path={path}
+                       component={Component}
+                       exact={true} /> 
             )}
-            <Redirect to={Login} />
+            <Redirect to={LOGIN_ROUTE} />
         </Switch>
-        </>
     );
 
 }
 
 export default AppRouter;
+ 

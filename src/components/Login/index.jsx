@@ -1,24 +1,44 @@
-import Context from '@mui/base/TabsUnstyled/TabsContext';
 import { Button } from '@mui/material';
-import React, { useContext } from 'react';
-import firebase from 'firebase/compat/app';
+import React from 'react';
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import './style.css';
-
 
 const Login = () => {
 
-  const {auth} = useContext(Context);
+  const login = async () => {
 
-  const login = async() => {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    const {user} = await auth.signInWithPopup(provider);
-    console.log('user', user);
+    const provider = new GoogleAuthProvider();
+    const auth = getAuth();
+
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        // The signed-in user info.
+        const user = result.user;
+        console.log('user', user);
+       
+        // ...
+      }).catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.email;
+        // The AuthCredential type that was used.
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        // ...
+      });
+
   }
+
+
 
   return (
     <div className='login'>
       <div>Login</div>
-      <Button variant={'outlined'} onClick={login} >Войти с помощью Google</Button>
+      <Button onClick={login} variant={'outlined'} >Enter with help Google</Button>
     </div>
   );
 }

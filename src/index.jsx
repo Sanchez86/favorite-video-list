@@ -5,6 +5,8 @@ import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
 import 'firebase/compat/auth';
 import './index.css';
+import { Provider } from 'react-redux';
+import store from './store/store';
 
 const app = firebase.initializeApp({
   apiKey: process.env.REACT_APP_APIKEY,
@@ -28,7 +30,9 @@ ReactDOM.render(
     firestore
   }}>
     <React.StrictMode>
-      <App />
+      <Provider store={store}>
+        <App />
+      </Provider>
     </React.StrictMode>
   </Context.Provider>,
   document.getElementById('root')

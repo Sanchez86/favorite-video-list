@@ -1,11 +1,17 @@
 import { Button } from '@mui/material';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { useDispatch, useSelector } from 'react-redux';
+import { loadUserDataRequest, loadUserDataResponce, loadUserDataFailure } from '../../store/actions/loadUserData';
 import './style.css';
 
 const Login = () => {
 
+  const dispatch = useDispatch();
+
   const login = async () => {
+
+    dispatch(loadUserDataRequest());
 
     const provider = new GoogleAuthProvider();
     const auth = getAuth();
@@ -17,6 +23,9 @@ const Login = () => {
         const token = credential.accessToken;
         // The signed-in user info.
         const user = result.user;
+        
+        dispatch(loadUserDataResponce(user));
+        
         console.log('user', user);
        
         // ...
@@ -28,7 +37,8 @@ const Login = () => {
         const email = error.email;
         // The AuthCredential type that was used.
         const credential = GoogleAuthProvider.credentialFromError(error);
-        // ...
+        
+        dispatch(loadUserDataFailure(error));
       });
 
   }

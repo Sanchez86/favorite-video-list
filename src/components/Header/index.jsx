@@ -5,13 +5,19 @@ import { LOGIN_ROUTE } from '../../utils/consts';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { Context } from '../../index';
 import { getAuth, signOut } from "firebase/auth";
+import { useSelector } from 'react-redux';
+import Loading from '../Loading';
 
 const Header = () => {
 
   const {auth, firestore} = useContext(Context);
   const [user] = useAuthState(auth);
-  console.log('user', user);
-  console.log('firestore', firestore);
+
+  const isLoading = useSelector(state => state.isLoading);
+    
+  // const useData = JSON.parse(localStorage.getItem('user'));
+  // const photoURL = useData.photoURL;
+  // console.log('photoURL', photoURL);
 
   const logOut = async () => {
 
@@ -29,6 +35,9 @@ const Header = () => {
 
     <AppBar color={"primary"} position="static">
       <Toolbar variant='dense'>
+        <Grid>
+        {isLoading ? <Loading /> : null}
+        </Grid>
         <Grid container justifyContent={"flex-end"}>
           {
             user ? 
@@ -38,8 +47,6 @@ const Header = () => {
                   <Button color={"secondary"} variant={"outlined"}>Login</Button>
               </NavLink>
           }
-          
-          
         </Grid>
       </Toolbar>
     </AppBar>

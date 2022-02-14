@@ -2,7 +2,11 @@ import { Button } from '@mui/material';
 import React, { useEffect } from 'react';
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { useDispatch, useSelector } from 'react-redux';
-import { loadUserDataRequest, loadUserDataResponce, loadUserDataFailure } from '../../store/actions/loadUserData';
+import {
+  loadUserDataRequest,
+  loadUserDataResponce,
+  loadUserDataFailure
+} from '../../store/actions/loadUserData';
 import './style.css';
 
 const Login = () => {

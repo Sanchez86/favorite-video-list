@@ -6,6 +6,12 @@ import {
   loadUserDataFailure,
 } from '../actions/loadUserData';
 
+import {
+  logOutUserRequest,
+  logOutUserResponce,
+  logOutUserFailure
+} from '../actions/logOutUser';
+
 // import {
 //   removeTodosRequest,
 //   removeTodosResponse,
@@ -43,6 +49,20 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(loadUserDataFailure, (state, action) => {
       state.error = action.payload;
     })
+
+
+    .addCase(logOutUserRequest, (state) => { // запрос
+      state.isLoading = true;
+      state.error = ''; // обнулили
+    })
+    .addCase(logOutUserResponce, (state, action) => {
+      state.data = {...state, data: ""}
+      state.isLoading = false;
+    })
+    .addCase(logOutUserFailure, (state, action) => {
+      state.error = action.payload;
+    })
+
 
     // .addCase(addTodosRequest, (state) => { // запрос
     //   state.isLoading = true;

@@ -12,24 +12,6 @@ import {
   logOutUserFailure
 } from '../actions/logOutUser';
 
-// import {
-//   removeTodosRequest,
-//   removeTodosResponse,
-//   removeTodosFailure,
-// } from '../actions/remove-todo';
-
-// import {
-//   addTodosRequest,
-//   addTodosResponse,
-//   addTodosFailure,
-// } from '../actions/add-todo';
-
-// import {
-//   updateTodosRequest,
-//   updateTodosResponse,
-//   updateTodosFailure,
-// } from '../actions/update-todo';
-
 const initialState = {
   data: {},
   isLoading: false,

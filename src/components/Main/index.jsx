@@ -1,18 +1,15 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { getAuth } from "firebase/auth";
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { Context } from '../../index';
-import {
-  loadUserDataRequest,
-  loadUserDataResponce,
-  loadUserDataFailure
-} from '../../store/actions/loadUserData';
+import firebase from '../../firebase/firebase';
+import { loadUserDataResponce } from '../../store/actions/loadUserData';
+import ListFilms from '../ListFilms/ListFilms';
 
 const Main = () => {
+  console.log('Main');
   const dispatch = useDispatch();
-  const {auth} = useContext(Context);
-  const [user] = useAuthState(auth);
+  const {auth} = firebase;
+  const [user] = useAuthState(auth());
 
   useEffect(()=> {
     dispatch(loadUserDataResponce(user));
@@ -20,7 +17,12 @@ const Main = () => {
   }, []);
 
 
-  return <div>Main</div>;
+  return (
+    <>
+      <h2>Main</h2>
+      <ListFilms />
+    </>
+  );
 }
 
 export default Main;

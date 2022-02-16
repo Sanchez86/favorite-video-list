@@ -5,7 +5,6 @@ import Header from './components/Header';
 import AppRouter from './components/AppRouter/AppRouter';
 import { ThemeProvider } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
-import { purple } from '@mui/material/colors';
 
 const theme = createTheme({
   palette: {

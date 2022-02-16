@@ -1,15 +1,19 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { privateRoutes, publicRoutes } from '../../routes';
 import { MAIN_ROUTE } from '../../utils/consts';
 import { LOGIN_ROUTE } from '../../utils/consts';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { Context } from '../../index';
+import firebase from '../../firebase/firebase';
 
 
 const AppRouter = () => {
-  const {auth} = useContext(Context);
-  const [user] = useAuthState(auth);
+    console.log('AppRouter');
+  const {auth} = firebase;
+  const [user] = useAuthState(auth());
+
+  console.log('auth', auth());
+  console.log('user', user);
 
   return user ?
     (

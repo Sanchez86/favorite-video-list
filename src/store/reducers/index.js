@@ -12,14 +12,32 @@ import {
   logOutUserFailure
 } from '../actions/logOutUser';
 
+import {
+  setFilm,
+  delateFilm,
+} from '../actions/films';
+
 const initialState = {
   data: {},
   isLoading: false,
   error: '',
+  users: {
+    settings: {
+      appearance: {
+        nightTheme: false,
+        gallery: 'slider',
+        markup: 'list'
+      },
+    },
+    films: [],
+  },
 };
 
 const reducer = createReducer(initialState, (builder) => {
   builder
+    .addCase(setFilm, (state, action) => {
+      state.users.films = [...state.users.films, action.payload];
+    })
     .addCase(loadUserDataRequest, (state) => { // запрос
       state.isLoading = true;
       state.error = ''; // обнулили

@@ -8,12 +8,12 @@ import firebase from '../../firebase/firebase';
 
 
 const AppRouter = () => {
-    console.log('AppRouter');
+
   const {auth} = firebase;
   const [user] = useAuthState(auth());
 
-  console.log('auth', auth());
-  console.log('user', user);
+//   console.log('auth', auth());
+//   console.log('user', user);
 
   return user ?
     (

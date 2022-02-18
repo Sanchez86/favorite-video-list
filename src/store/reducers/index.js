@@ -13,6 +13,12 @@ import {
 } from '../actions/logOutUser';
 
 import {
+  loadUserDataBaseRequest,
+  loadUserDataBaseResponce,
+  loadUserDataBaseFailure
+} from '../actions/loadUserDataBase';
+
+import {
   setFilm,
   delateFilm,
 } from '../actions/films';
@@ -35,6 +41,20 @@ const initialState = {
 
 const reducer = createReducer(initialState, (builder) => {
   builder
+
+   .addCase(loadUserDataBaseRequest, (state) => { // запрос
+      state.isLoading = true;
+      state.error = ''; // обнулили
+    })
+    .addCase(loadUserDataBaseResponce, (state, action) => {
+      state = {...state, users: action.payload}
+      state.isLoading = false;
+    })
+    .addCase(loadUserDataBaseFailure, (state, action) => {
+      state.error = action.payload;
+    })
+
+  
     .addCase(setFilm, (state, action) => {
       state.users.films = [...state.users.films, action.payload];
     })
@@ -43,7 +63,7 @@ const reducer = createReducer(initialState, (builder) => {
       state.error = ''; // обнулили
     })
     .addCase(loadUserDataResponce, (state, action) => {
-      state.data = {...state, data: action.payload}
+      state = {...state, data: action.payload}
       state.isLoading = false;
     })
     .addCase(loadUserDataFailure, (state, action) => {

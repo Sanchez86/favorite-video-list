@@ -10,7 +10,6 @@ import {
 import './style.css';
 
 const Login = () => {
-  console.log('Login');
 
   const dispatch = useDispatch();
 

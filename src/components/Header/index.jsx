@@ -15,7 +15,6 @@ import {
  import './style.css';
 
 const Header = () => {
-  console.log('Header');
 
   const dispatch = useDispatch();
 

@@ -41,6 +41,21 @@ const initialState = {
 
 const reducer = createReducer(initialState, (builder) => {
   builder
+    .addCase(setFilm, (state, action) => {
+      state.users.films = [...state.users.films, action.payload];
+    })
+    .addCase(loadUserDataRequest, (state) => { // запрос
+      state.isLoading = true;
+      state.error = ''; // обнулили
+    })
+    .addCase(loadUserDataResponce, (state, action) => {
+      console.log('reducer', action.payload);
+      state = {...state, data: action.payload}
+      state.isLoading = false;
+    })
+    .addCase(loadUserDataFailure, (state, action) => {
+      state.error = action.payload;
+    })
 
    .addCase(loadUserDataBaseRequest, (state) => { // запрос
       state.isLoading = true;
@@ -51,22 +66,6 @@ const reducer = createReducer(initialState, (builder) => {
       state.isLoading = false;
     })
     .addCase(loadUserDataBaseFailure, (state, action) => {
-      state.error = action.payload;
-    })
-
-  
-    .addCase(setFilm, (state, action) => {
-      state.users.films = [...state.users.films, action.payload];
-    })
-    .addCase(loadUserDataRequest, (state) => { // запрос
-      state.isLoading = true;
-      state.error = ''; // обнулили
-    })
-    .addCase(loadUserDataResponce, (state, action) => {
-      state = {...state, data: action.payload}
-      state.isLoading = false;
-    })
-    .addCase(loadUserDataFailure, (state, action) => {
       state.error = action.payload;
     })
 

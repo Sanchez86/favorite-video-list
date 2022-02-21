@@ -5,15 +5,25 @@ import { MAIN_ROUTE } from '../../utils/consts';
 import { LOGIN_ROUTE } from '../../utils/consts';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import firebase from '../../firebase/firebase';
-
+import { loadUserDataResponce } from '../../store/actions/loadUserData';
+import { useDispatch } from 'react-redux';
 
 const AppRouter = () => {
+    console.log('AppRouter');
+    const {auth} = firebase;
+    const [user] = useAuthState(auth());
+    const dispatch = useDispatch();
 
-  const {auth} = firebase;
-  const [user] = useAuthState(auth());
-
-//   console.log('auth', auth());
-//   console.log('user', user);
+    
+    if(user){
+        const userData = {
+            name: user.displayName,
+            uid: user.uid,
+            photoURL: user.photoURL,
+        };
+        
+        dispatch(loadUserDataResponce(userData));
+    }
 
   return user ?
     (

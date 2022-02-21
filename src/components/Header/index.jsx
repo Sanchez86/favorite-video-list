@@ -20,6 +20,9 @@ const Header = () => {
 
   const {auth} = firebase;
   const [user] = useAuthState(auth());
+  
+  // console.log('auth -- ', auth());
+  // console.log('user -- ', user);
 
   const isLoading = useSelector(state => state.isLoading); 
   const userName = useSelector(state => state.data.data);

@@ -5,12 +5,10 @@ import firebase from '../../firebase/firebase';
 import { doc, getFirestore, getDoc } from "firebase/firestore"; 
 
 const ListFilms = () => {
-
   const {auth} = firebase;
 
   const [user] = useAuthState(auth());
   
-
   const db = getFirestore();
 
   const docRef = doc(db, "users", user.uid);
@@ -18,7 +16,7 @@ const ListFilms = () => {
   
   docSnap.then((res) => {
     if (res.exists()) {
-      console.log("Document data:", res.data());
+      //console.log("Document data:", res.data());
     } else {
       // doc.data() will be undefined in this case
       console.log("No such document!");

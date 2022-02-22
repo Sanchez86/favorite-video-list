@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Button, TextField } from '@mui/material';
+import { Button, TextField, Box, Typography, Rating, FormControl, Select, MenuItem } from '@mui/material';
 import { doc, setDoc } from "firebase/firestore";
+import { getStorage, ref, uploadBytes } from "firebase/storage";
 import { db } from '../../firebase/firebase';
 import { setFilm } from '../../store/actions/films';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,18 +11,61 @@ const AddFilm = () => {
   const dispatch = useDispatch();
   const films = useSelector((state) => state.users.films);
   const user = useSelector((state) => state.data);
-  const [value, setValue] = useState('');
 
+  const [name, setName] = useState('');
+  const [filmURL, setFilmURL] = useState('');
+  const [year, setYear] = useState(1999);
+  const [rating, setRating] = useState(1);
+  const [category, setCategory] = useState('');
+  const [ganre, setGanre] = useState('');
   const [image, setImage] = useState(null);
+  
+  const storage = getStorage();
+
+  const handleChange = (e) => {
+    if(e.target.files[0]){
+      setImage(e.target.files[0]);
+    }
+  }
+
+  const handleUpload = () => {
+    
+    const storageRef = ref(storage, 'some-child');
+
+    // 'file' comes from the Blob or File API
+    uploadBytes(storageRef, image).then((snapshot) => {
+      console.log('Uploaded a blob or file!', snapshot);
+    });
+
+    
+
+    // const uploadTask = storage.ref(`images/${image.name}`).put(image);
+    // uploadTask.on(
+    //   "state_change",
+    //   snapshot => {},
+    //   error => {
+    //     console.log('error', error);
+    //   },
+    //   () => {
+    //     storage
+    //       .ref("images")
+    //       .child(image.name)
+    //       .getDownloadURL()
+    //       .then(url => {
+    //         console.log('url', url);
+    //       });
+    //   }
+    // );
+  }
   
   const sendData = () => {
     const filmData = {
-      name: 'deadpool',
-      category: "films",
-      genre: "comedy",
-      imageURL: "http://fire...",
-      rating: 2,
-      year: 1999,
+      name,
+      category,
+      ganre,
+      filmURL,
+      rating,
+      year,
       id:1,
     }
     dispatch(setFilm(filmData));
@@ -44,25 +88,107 @@ const AddFilm = () => {
     }
 
     setData();
+
+    setName('');
+    setFilmURL('');
+    setYear(1999);
+    setRating(1);
+    setCategory('');
+    setGanre('');
      
   }, [films]);
 
-  const handleChange = (e) => {
-    // if(e.target.files[0]){
-    //   setImage(e.target.files[0]);
-    // }
-  }
+  const changeCategory = (event) => {
+    setCategory(event.target.value);
+  };
+  const changeGanre = (event) => {
+    setGanre(event.target.value);
+  };
   
   return (
     <div>
-      <TextField
-          fullWidth
-          variant={"outlined"}
-          value={value}
-          onChange={e => setValue(e.target.value)}
+      <Box>
+        <FormControl>
+          <Select
+            value={category}
+            onChange={changeCategory}
+            displayEmpty
+            inputProps={{ 'aria-label': 'Without label' }}
+          >
+            <MenuItem value="" disabled>
+            Set category
+            </MenuItem>
+            <MenuItem value={"Фильмы"}>Фильмы</MenuItem>
+            <MenuItem value={"Сериалы"}>Сериалы</MenuItem>
+            <MenuItem value={"Мультфильмы"}>Мультфильмы</MenuItem>
+            <MenuItem value={"Аниме"}>Аниме</MenuItem>
+          </Select>
+        </FormControl>
+      </Box>
+      <Box>
+        <FormControl>
+          <Select
+            value={ganre}
+            onChange={changeGanre}
+            displayEmpty
+            inputProps={{ 'aria-label': 'Without label' }}
+          >
+            <MenuItem value="" disabled>
+            Set ganre
+            </MenuItem>
+            <MenuItem value={"Комедии"}>Комедии</MenuItem>
+            <MenuItem value={"Драммы"}>Драммы</MenuItem>
+            <MenuItem value={"Мелодраммы"}>Мелодраммы</MenuItem>
+            <MenuItem value={"Боевики"}>Боевики</MenuItem>
+          </Select>
+        </FormControl>
+      </Box>
+      <Box>
+        <TextField
+            label="Film name"
+            fullWidth
+            variant={"outlined"}
+            value={name}
+            name={"film-name"}
+            onChange={e => setName(e.target.value)}
         />
+      </Box>
+      <Box>
+        <TextField
+            label="URL for poster"
+            fullWidth
+            variant={"outlined"}
+            value={filmURL}
+            name={"setFilmURL"}
+            onChange={e => setFilmURL(e.target.value)}
+        />
+      </Box>
+      <Box component="fieldset" mb={3} borderColor="transparent">
+        <Typography component="legend">Controlled</Typography>
+        <Rating
+          name="simple-controlled"
+          value={rating}
+          onChange={(event, newValue) => {
+            setRating(newValue);
+          }}
+        />
+      </Box>
+      <Box>
+      <TextField
+            label="Year"
+            type="number"
+            variant={"outlined"}
+            value={year}
+            name={"setYear"}
+            onChange={e => setYear(e.target.value)}
+        />
+      </Box>
+      <Box>
         <input type="file" onChange={handleChange} />
-        <Button onClick={sendData}>Send</Button>
+      </Box>
+      <Button onClick={sendData}>Send</Button>
+      <Button onClick={handleUpload}>Send img</Button>
+      
     </div>
 
   );

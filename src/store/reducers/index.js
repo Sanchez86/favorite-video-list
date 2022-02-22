@@ -49,7 +49,6 @@ const reducer = createReducer(initialState, (builder) => {
       state.error = ''; // обнулили
     })
     .addCase(loadUserDataResponce, (state, action) => {
-      console.log('reducer', action.payload);
       state.data = {...action.payload}
       state.isLoading = false;
     })

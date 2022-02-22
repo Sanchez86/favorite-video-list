@@ -1,5 +1,5 @@
 import { createAction } from '@reduxjs/toolkit';
 
-export const loadUserDataBaseRequest = createAction('load_User_Data_Base_Request');
-export const loadUserDataBaseResponce = createAction('load_User_Data_Base_Responce');
-export const loadUserDataBaseFailure = createAction('load_User_Data_Base_Failure');
+export const loadUserDataBaseRequest = createAction('LOAD_USER_DATA_BASE_REQUEST');
+export const loadUserDataBaseResponce = createAction('LOAD_USER_DATA_BASE_RESPONCE');
+export const loadUserDataBaseFailure = createAction('LOAD_USER_DATA_BASE_FAILURE');

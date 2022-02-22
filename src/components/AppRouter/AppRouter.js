@@ -4,9 +4,11 @@ import { privateRoutes, publicRoutes } from '../../routes';
 import { MAIN_ROUTE } from '../../utils/consts';
 import { LOGIN_ROUTE } from '../../utils/consts';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import firebase from '../../firebase/firebase';
+import { collection, getDocs } from "firebase/firestore"; 
+import firebase, { db } from '../../firebase/firebase';
 import { loadUserDataResponce } from '../../store/actions/loadUserData';
 import { useDispatch } from 'react-redux';
+import { loadUserDataBaseResponce } from '../../store/actions/loadUserDataBase';
 
 const AppRouter = () => {
     console.log('AppRouter');
@@ -22,10 +24,23 @@ const AppRouter = () => {
                 uid: user.uid,
                 photoURL: user.photoURL,
             };
-            
+            // данные авторизованного пользователя из гугл аккаунта
             dispatch(loadUserDataResponce({...userData}));
         }
     });
+
+    useEffect(()=> {
+        const getUserDataFirestore = async() => {
+            const querySnapshot = await getDocs(collection(db, "users"));
+            querySnapshot.forEach((user) => {
+              // данные авторизованного пользователя с firebase (films, settings)
+              //console.log('user', user.data());
+              dispatch(loadUserDataBaseResponce(user.data()))
+            });
+        }
+        getUserDataFirestore();
+    
+      }, []);
     
 
   return user ?

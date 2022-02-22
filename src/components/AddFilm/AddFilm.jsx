@@ -1,25 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { Button, TextField } from '@mui/material';
-import { doc, setDoc, getFirestore   } from "firebase/firestore"; 
-import firebase from '../../firebase/firebase';
-import { useAuthState } from 'react-firebase-hooks/auth';
+import { doc, setDoc } from "firebase/firestore";
+import { db } from '../../firebase/firebase';
 import { setFilm } from '../../store/actions/films';
 import { useDispatch, useSelector } from 'react-redux';
 
 const AddFilm = () => {
 
   const dispatch = useDispatch();
-  let films = useSelector((state) => state.users.films);
-  console.log('films', films);
+  const films = useSelector((state) => state.users.films);
   const user = useSelector((state) => state.data);
-   const [value, setValue] = useState('');
+  const [value, setValue] = useState('');
 
   const [image, setImage] = useState(null);
-  const db = getFirestore();
   
   const sendData = () => {
     const filmData = {
-      name: 'batman',
+      name: 'deadpool',
       category: "films",
       genre: "comedy",
       imageURL: "http://fire...",
@@ -31,6 +28,8 @@ const AddFilm = () => {
   }
 
   useEffect(()=>{
+    if(!films.length) return;
+
     const setData = async() => {
       await setDoc(doc(db, "users", user.uid), {
         settings: {
@@ -46,7 +45,7 @@ const AddFilm = () => {
 
     setData();
      
-  }, [films])
+  }, [films]);
 
   const handleChange = (e) => {
     // if(e.target.files[0]){

@@ -19,7 +19,7 @@ const Header = () => {
   const dispatch = useDispatch();
 
   const {auth} = firebase;
-  const [user] = useAuthState(auth());
+  //const [user] = useAuthState(auth());
   
   // console.log('auth -- ', auth());
   // console.log('user -- ', user);
@@ -63,7 +63,7 @@ const Header = () => {
             {userName ? userName._delegate.displayName : null}
           </Box>
         </Grid>
-        <Grid container justifyContent={"flex-end"}>
+        {/* <Grid container justifyContent={"flex-end"}>
           {
             user ? 
               <Button onClick={logOut} color={"secondary"} variant={"outlined"}>Logout</Button>
@@ -72,7 +72,7 @@ const Header = () => {
                   <Button color={"secondary"} variant={"outlined"}>Login</Button>
               </NavLink>
           }
-        </Grid>
+        </Grid> */}
       </Toolbar>
     </AppBar>
   );

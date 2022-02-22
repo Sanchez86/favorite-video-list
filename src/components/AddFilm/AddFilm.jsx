@@ -11,9 +11,8 @@ const AddFilm = () => {
   const dispatch = useDispatch();
   let films = useSelector((state) => state.users.films);
   console.log('films', films);
-  const {auth} = firebase;
-  const [user] = useAuthState(auth());
-  const [value, setValue] = useState('');
+  const user = useSelector((state) => state.data);
+   const [value, setValue] = useState('');
 
   const [image, setImage] = useState(null);
   const db = getFirestore();

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { privateRoutes, publicRoutes } from '../../routes';
 import { MAIN_ROUTE } from '../../utils/consts';
@@ -12,18 +12,21 @@ const AppRouter = () => {
     console.log('AppRouter');
     const {auth} = firebase;
     const [user] = useAuthState(auth());
+
     const dispatch = useDispatch();
 
+    useEffect(() => {
+        if(user){
+            const userData = {
+                name: user.displayName,
+                uid: user.uid,
+                photoURL: user.photoURL,
+            };
+            
+            dispatch(loadUserDataResponce({...userData}));
+        }
+    });
     
-    if(user){
-        const userData = {
-            name: user.displayName,
-            uid: user.uid,
-            photoURL: user.photoURL,
-        };
-        
-        dispatch(loadUserDataResponce(userData));
-    }
 
   return user ?
     (

@@ -50,7 +50,7 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(loadUserDataResponce, (state, action) => {
       console.log('reducer', action.payload);
-      state = {...state, data: action.payload}
+      state.data = {...action.payload}
       state.isLoading = false;
     })
     .addCase(loadUserDataFailure, (state, action) => {
@@ -62,7 +62,7 @@ const reducer = createReducer(initialState, (builder) => {
       state.error = ''; // обнулили
     })
     .addCase(loadUserDataBaseResponce, (state, action) => {
-      state = {...state, users: action.payload}
+      state.users = {...action.payload}
       state.isLoading = false;
     })
     .addCase(loadUserDataBaseFailure, (state, action) => {

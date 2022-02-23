@@ -12,12 +12,16 @@ const AddFilm = () => {
   const films = useSelector((state) => state.users.films);
   const user = useSelector((state) => state.data);
 
+  const nightTheme = useSelector(state => state.users.settings.appearance.nightTheme);
+  const gallery = useSelector(state => state.users.settings.appearance.gallery);
+  const markup = useSelector(state => state.users.settings.appearance.markup);
+
   const [name, setName] = useState('');
   const [filmURL, setFilmURL] = useState('');
-  const [year, setYear] = useState(1999);
-  const [rating, setRating] = useState(1);
   const [category, setCategory] = useState('');
   const [ganre, setGanre] = useState('');
+  const [year, setYear] = useState(1999);
+  const [rating, setRating] = useState(1);
   const [image, setImage] = useState(null);
   
   const storage = getStorage();
@@ -68,9 +72,9 @@ const AddFilm = () => {
       await setDoc(doc(db, "users", user.uid), {
         settings: {
           appearance: {
-            nightTheme: false,
-            gallery: 'slider',
-            markup: 'list'
+            nightTheme: nightTheme,
+            gallery: gallery,
+            markup: markup
           },
         },
         films: films,
@@ -85,6 +89,7 @@ const AddFilm = () => {
     setRating(1);
     setCategory('');
     setGanre('');
+    setImage(null);
      
   }, [films]);
 
@@ -174,9 +179,16 @@ const AddFilm = () => {
         />
       </Box>
       <Box>
-        <input type="file" onChange={handleChange} />
+        <input required type="file" onChange={handleChange} />
       </Box>
-      <Button onClick={sendData}>Send</Button>
+      {
+        (name === '' || filmURL === '' || category === '' || ganre === '' ||
+          year <= 0 || rating === 1 || image === null) ?
+            null
+          :
+            <Button onClick={sendData}>Send</Button>
+          
+      }
       
     </div>
 

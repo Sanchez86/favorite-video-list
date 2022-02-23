@@ -2,10 +2,8 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 const ListFilms = () => {
-  console.log('ListFilms');
 
   let films = useSelector((state) => state.users.films);
-  console.log('films', films);
 
   return (
     <div>

@@ -23,6 +23,8 @@ import {
   delateFilm,
 } from '../actions/films';
 
+import { setNightTheme } from '../actions/userSettings';
+
 const initialState = {
   data: {},
   isLoading: false,
@@ -30,7 +32,7 @@ const initialState = {
   users: {
     settings: {
       appearance: {
-        nightTheme: false,
+        nightTheme: null,
         gallery: 'slider',
         markup: 'list'
       },
@@ -41,6 +43,11 @@ const initialState = {
 
 const reducer = createReducer(initialState, (builder) => {
   builder
+    .addCase(setNightTheme, (state) => {
+      console.log();
+      state.users.settings.appearance.nightTheme = !state.users.settings.appearance.nightTheme;
+    })
+
     .addCase(setFilm, (state, action) => {
       state.users.films = [...state.users.films, action.payload];
     })

@@ -14,7 +14,10 @@ const ListFilms = () => {
         {
           films.map((item, i) => {
             return(
-              <li key={i}>Name: {item.name}</li>
+              <li key={i}>
+                Name: {item.name}
+                {item.posterURL ? <img src={item.posterURL} width={50} height={50} alt="" /> : null}
+              </li>
             )
           })
           

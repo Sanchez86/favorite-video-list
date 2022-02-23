@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button, TextField, Box, Typography, Rating, FormControl, Select, MenuItem } from '@mui/material';
 import { doc, setDoc } from "firebase/firestore";
-import { getStorage, ref, uploadBytes } from "firebase/storage";
+import { getStorage, ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import { db } from '../../firebase/firebase';
 import { setFilm } from '../../store/actions/films';
 import { useDispatch, useSelector } from 'react-redux';
@@ -27,48 +27,38 @@ const AddFilm = () => {
       setImage(e.target.files[0]);
     }
   }
-
-  const handleUpload = () => {
-    
-    const storageRef = ref(storage, 'some-child');
-
-    // 'file' comes from the Blob or File API
-    uploadBytes(storageRef, image).then((snapshot) => {
-      console.log('Uploaded a blob or file!', snapshot);
-    });
-
-    
-
-    // const uploadTask = storage.ref(`images/${image.name}`).put(image);
-    // uploadTask.on(
-    //   "state_change",
-    //   snapshot => {},
-    //   error => {
-    //     console.log('error', error);
-    //   },
-    //   () => {
-    //     storage
-    //       .ref("images")
-    //       .child(image.name)
-    //       .getDownloadURL()
-    //       .then(url => {
-    //         console.log('url', url);
-    //       });
-    //   }
-    // );
-  }
   
   const sendData = () => {
-    const filmData = {
-      name,
-      category,
-      ganre,
-      filmURL,
-      rating,
-      year,
-      id:1,
-    }
-    dispatch(setFilm(filmData));
+
+    const storageRef = ref(storage, image.name);
+    const uploadTask = uploadBytesResumable(storageRef, image);
+
+    uploadTask.on(
+      "state_change",
+      snapshot => {},
+      error => {
+        console.log('error', error);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref)
+        .then(url => {
+
+          const filmData = {
+            name,
+            category,
+            ganre,
+            filmURL,
+            posterURL: url,
+            rating,
+            year,
+            id:1,
+          }
+          dispatch(setFilm(filmData));
+
+        })
+      }
+    )
+
   }
 
   useEffect(()=>{
@@ -187,7 +177,6 @@ const AddFilm = () => {
         <input type="file" onChange={handleChange} />
       </Box>
       <Button onClick={sendData}>Send</Button>
-      <Button onClick={handleUpload}>Send img</Button>
       
     </div>
 

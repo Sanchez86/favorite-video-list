@@ -5,6 +5,7 @@ import Header from './components/Header';
 import AppRouter from './components/AppRouter/AppRouter';
 import { ThemeProvider } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
+import Footer from './components/Footer/Footer';
 
 const theme = createTheme({
   palette: {
@@ -27,6 +28,7 @@ function App() {
         <BrowserRouter>
         <Header />
         <AppRouter />
+        <Footer/>
         </BrowserRouter>
       </ThemeProvider>  
     </div>

@@ -27,7 +27,7 @@ import { setNightTheme } from '../actions/userSettings';
 
 const initialState = {
   data: {},
-  isLoading: false,
+  isLoading: true,
   error: '',
   users: {
     settings: {

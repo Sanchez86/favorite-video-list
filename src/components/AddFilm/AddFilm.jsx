@@ -5,6 +5,8 @@ import { getStorage, ref, getDownloadURL, uploadBytesResumable } from "firebase/
 import { db } from '../../firebase/firebase';
 import { setFilm } from '../../store/actions/films';
 import { useDispatch, useSelector } from 'react-redux';
+import nanoid from 'nanoid';
+import './style.css';
 
 const AddFilm = () => {
 
@@ -55,7 +57,7 @@ const AddFilm = () => {
             posterURL: url,
             rating,
             year,
-            id:1,
+            id:nanoid(),
           }
           dispatch(setFilm(filmData));
 
@@ -101,17 +103,20 @@ const AddFilm = () => {
   };
   
   return (
-    <div>
+    <div className='add-film'>
       <Box>
         <FormControl>
           <Select
+            style={{ width: '100%', marginBottom: '15px' }}
             value={category}
+            size="small"
+            fullWidth
             onChange={changeCategory}
             displayEmpty
             inputProps={{ 'aria-label': 'Without label' }}
           >
             <MenuItem value="" disabled>
-            Set category
+            Выберете категорию
             </MenuItem>
             <MenuItem value={"Фильмы"}>Фильмы</MenuItem>
             <MenuItem value={"Сериалы"}>Сериалы</MenuItem>
@@ -123,13 +128,16 @@ const AddFilm = () => {
       <Box>
         <FormControl>
           <Select
+            style={{ width: '100%', marginBottom: '15px' }}
+            size="small"
             value={ganre}
+            fullWidth
             onChange={changeGanre}
             displayEmpty
             inputProps={{ 'aria-label': 'Without label' }}
           >
             <MenuItem value="" disabled>
-            Set ganre
+            Выберете жанр
             </MenuItem>
             <MenuItem value={"Комедии"}>Комедии</MenuItem>
             <MenuItem value={"Драммы"}>Драммы</MenuItem>
@@ -140,7 +148,9 @@ const AddFilm = () => {
       </Box>
       <Box>
         <TextField
-            label="Film name"
+            style={{ marginBottom: '15px' }}
+            size="small"
+            label="Название"
             fullWidth
             variant={"outlined"}
             value={name}
@@ -150,8 +160,10 @@ const AddFilm = () => {
       </Box>
       <Box>
         <TextField
-            label="URL for poster"
+            style={{ marginBottom: '15px' }}
+            label={`Ссылка на ${category}`}
             fullWidth
+            size="small"
             variant={"outlined"}
             value={filmURL}
             name={"setFilmURL"}
@@ -159,8 +171,9 @@ const AddFilm = () => {
         />
       </Box>
       <Box component="fieldset" mb={3} borderColor="transparent">
-        <Typography component="legend">Controlled</Typography>
+        <Typography component="legend">Рейтинг</Typography>
         <Rating
+          style={{ width: '100%', marginBottom: '15px' }}
           name="simple-controlled"
           value={rating}
           onChange={(event, newValue) => {
@@ -170,7 +183,9 @@ const AddFilm = () => {
       </Box>
       <Box>
       <TextField
-            label="Year"
+            style={{ width: '100%', marginBottom: '15px' }}
+            size="small"
+            label="Год"
             type="number"
             variant={"outlined"}
             value={year}
@@ -186,7 +201,13 @@ const AddFilm = () => {
           year <= 0 || rating === 1 || image === null) ?
             null
           :
-            <Button onClick={sendData}>Send</Button>
+            <Button
+              style={{ marginTop: '15px' }}
+              onClick={sendData}
+              variant={'outlined'}
+              color={"secondary"}>
+                Send
+            </Button>
           
       }
       

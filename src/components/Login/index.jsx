@@ -49,7 +49,7 @@ const Login = () => {
   return (
     <div className='login'>
       <div>Login</div>
-      <Button onClick={login} variant={'outlined'} >Enter with help Google</Button>
+      <Button onClick={login} variant={'outlined'} color={"secondary"} >Enter with help Google</Button>
     </div>
   );
 }

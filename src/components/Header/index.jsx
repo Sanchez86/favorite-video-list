@@ -1,4 +1,4 @@
-import { AppBar, Button, Grid, Toolbar, Box } from '@mui/material';
+import { AppBar, Button, Grid, Toolbar, Box, Fab } from '@mui/material';            
 import Brightness2Icon from '@material-ui/icons/Brightness2';
 import React, { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
@@ -17,6 +17,12 @@ import {
  import './style.css';
 
 const Header = () => {
+
+  const toggleClass = () => {
+    const add = document.querySelector('.add-film');
+    add.classList.toggle("active");
+    console.log('add', add)
+  }
 
   const dispatch = useDispatch();
 
@@ -86,6 +92,11 @@ const Header = () => {
           <Box ml={1}>
             {user.name ? user.name : null}
           </Box>
+        </Grid>
+        <Grid>
+          <Fab color="primary" aria-label="add" onClick={toggleClass}>
+            +
+          </Fab>
         </Grid>
         <Grid container justifyContent={"flex-end"}>
           <Box mr={1}>

@@ -6,11 +6,11 @@ import AddFilm from '../AddFilm/AddFilm';
 const Main = () => {
   
   return (
-    <>
-      <h2>Main</h2>
+    <div className="container">
+      <br/>
       <AddFilm />
-      <ListFilms />
-    </>
+      <ListFilms />  
+    </div>
   );
 }
 

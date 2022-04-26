@@ -11,7 +11,7 @@ const ListFilms = () => {
     <Grid container spacing={2}>
 
       {
-        films.map((item, i) => {
+        films && films.map((item, i) => {
           return (
             <Grid key={i} item xs={12} sm={4} md={3} lg={2}>
               <Film item={item} />

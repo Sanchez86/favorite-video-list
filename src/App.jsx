@@ -37,7 +37,7 @@ function App() {
           {!isLoading && (<>
             <Header />
             <AppRouter user={user} />
-            <Footer />
+            {/* <Footer /> */}
           </>)}
 
 

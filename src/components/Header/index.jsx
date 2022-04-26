@@ -78,12 +78,12 @@ const Header = () => {
       <Toolbar variant='dense'>
         <Grid container alignItems={"center"}>
           <Box className='avatar'>
-            {(Object.values(user).length > 0) ?
-              <img src={user.photoURL ? user.photoURL : null}
+            {(user.photoURL ?
+              <img src={user.photoURL}
                 alt={user.name ? user.name : "image"}
               />
               :
-              null}
+              null)}
           </Box>
           <Box ml={1}>
             {user.name ? user.name : null}

@@ -15,16 +15,20 @@ code {
     monospace;
 }
 
-.container{
+.container {
   width: 100%;
   max-width: 1200px;
   margin: auto;
 }
 
-.footer-link{
+.footer-link {
   display: flex;
   justify-content: center;
   color: #333;
   text-decoration: none;
   padding: 10px;
+}
+
+.hidden {
+  display: none;
 }

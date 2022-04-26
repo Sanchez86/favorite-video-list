@@ -25,15 +25,15 @@ const AddFilm = () => {
   const [year, setYear] = useState(1999);
   const [rating, setRating] = useState(1);
   const [image, setImage] = useState(null);
-  
+
   const storage = getStorage();
 
   const handleChange = (e) => {
-    if(e.target.files[0]){
+    if (e.target.files[0]) {
       setImage(e.target.files[0]);
     }
   }
-  
+
   const sendData = () => {
 
     const storageRef = ref(storage, image.name);
@@ -41,36 +41,36 @@ const AddFilm = () => {
 
     uploadTask.on(
       "state_change",
-      snapshot => {},
+      snapshot => { },
       error => {
         console.log('error', error);
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref)
-        .then(url => {
+          .then(url => {
 
-          const filmData = {
-            name,
-            category,
-            ganre,
-            filmURL,
-            posterURL: url,
-            rating,
-            year,
-            id:nanoid(),
-          }
-          dispatch(setFilm(filmData));
+            const filmData = {
+              name,
+              category,
+              ganre,
+              filmURL,
+              posterURL: url,
+              rating,
+              year,
+              id: nanoid(),
+            }
+            dispatch(setFilm(filmData));
 
-        })
+          })
       }
     )
 
   }
 
-  useEffect(()=>{
-    if(!films.length) return;
+  useEffect(() => {
+    if (!films.length) return;
 
-    const setData = async() => {
+    const setData = async () => {
       await setDoc(doc(db, "users", user.uid), {
         settings: {
           appearance: {
@@ -92,7 +92,7 @@ const AddFilm = () => {
     setCategory('');
     setGanre('');
     setImage(null);
-     
+
   }, [films]);
 
   const changeCategory = (event) => {
@@ -101,7 +101,7 @@ const AddFilm = () => {
   const changeGanre = (event) => {
     setGanre(event.target.value);
   };
-  
+
   return (
     <div className='add-film'>
       <Box>
@@ -116,7 +116,7 @@ const AddFilm = () => {
             inputProps={{ 'aria-label': 'Without label' }}
           >
             <MenuItem value="" disabled>
-            Выберете категорию
+              Выберете категорию
             </MenuItem>
             <MenuItem value={"Фильмы"}>Фильмы</MenuItem>
             <MenuItem value={"Сериалы"}>Сериалы</MenuItem>
@@ -137,7 +137,7 @@ const AddFilm = () => {
             inputProps={{ 'aria-label': 'Without label' }}
           >
             <MenuItem value="" disabled>
-            Выберете жанр
+              Выберете жанр
             </MenuItem>
             <MenuItem value={"Комедии"}>Комедии</MenuItem>
             <MenuItem value={"Драммы"}>Драммы</MenuItem>
@@ -148,26 +148,26 @@ const AddFilm = () => {
       </Box>
       <Box>
         <TextField
-            style={{ marginBottom: '15px' }}
-            size="small"
-            label="Название"
-            fullWidth
-            variant={"outlined"}
-            value={name}
-            name={"film-name"}
-            onChange={e => setName(e.target.value)}
+          style={{ marginBottom: '15px' }}
+          size="small"
+          label="Название"
+          fullWidth
+          variant={"outlined"}
+          value={name}
+          name={"film-name"}
+          onChange={e => setName(e.target.value)}
         />
       </Box>
       <Box>
         <TextField
-            style={{ marginBottom: '15px' }}
-            label={`Ссылка на ${category}`}
-            fullWidth
-            size="small"
-            variant={"outlined"}
-            value={filmURL}
-            name={"setFilmURL"}
-            onChange={e => setFilmURL(e.target.value)}
+          style={{ marginBottom: '15px' }}
+          label={`Ссылка на ${category}`}
+          fullWidth
+          size="small"
+          variant={"outlined"}
+          value={filmURL}
+          name={"setFilmURL"}
+          onChange={e => setFilmURL(e.target.value)}
         />
       </Box>
       <Box component="fieldset" mb={3} borderColor="transparent">
@@ -182,35 +182,47 @@ const AddFilm = () => {
         />
       </Box>
       <Box>
-      <TextField
-            style={{ width: '100%', marginBottom: '15px' }}
-            size="small"
-            label="Год"
-            type="number"
-            variant={"outlined"}
-            value={year}
-            name={"setYear"}
-            onChange={e => setYear(e.target.value)}
+        <TextField
+          style={{ width: '100%', marginBottom: '15px' }}
+          size="small"
+          label="Год"
+          type="number"
+          variant={"outlined"}
+          value={year}
+          name={"setYear"}
+          onChange={e => setYear(e.target.value)}
         />
       </Box>
+
       <Box>
-        <input required type="file" onChange={handleChange} />
+        <Button
+          variant="contained"
+          component="label"
+        >
+          Загрузить постер
+          <input
+            type="file"
+            required
+            hidden
+            onChange={handleChange}
+          />
+        </Button>
       </Box>
       {
         (name === '' || filmURL === '' || category === '' || ganre === '' ||
           year <= 0 || rating === 1 || image === null) ?
-            null
+          null
           :
-            <Button
-              style={{ marginTop: '15px' }}
-              onClick={sendData}
-              variant={'outlined'}
-              color={"secondary"}>
-                Send
-            </Button>
-          
+          <Button
+            style={{ marginTop: '15px' }}
+            onClick={sendData}
+            variant={'outlined'}
+            color={"secondary"}>
+            Send
+          </Button>
+
       }
-      
+
     </div>
 
   );

@@ -1,4 +1,4 @@
-.add-film{
+.add-film {
     transition: 1s;
     position: absolute;
     top: -500px;
@@ -12,6 +12,12 @@
     box-shadow: 0px 1px 5px black;
 }
 
-.add-film.active{
+.add-film.active {
     top: 48px;
+}
+
+@media only screen and (max-width: 786px) {
+    .add-film {
+        width: 91%;
+    }
 }

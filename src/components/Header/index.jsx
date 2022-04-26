@@ -1,4 +1,4 @@
-import { AppBar, Button, Grid, Toolbar, Box, Fab } from '@mui/material';            
+import { AppBar, Button, Grid, Toolbar, Box, Fab } from '@mui/material';
 import Brightness2Icon from '@material-ui/icons/Brightness2';
 import React, { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
@@ -12,9 +12,9 @@ import {
   logOutUserRequest,
   logOutUserResponce,
   logOutUserFailure
- } from '../../store/actions/logOutUser';
- import { setNightTheme } from '../../store/actions/userSettings';
- import './style.css';
+} from '../../store/actions/logOutUser';
+import { setNightTheme } from '../../store/actions/userSettings';
+import './style.css';
 
 const Header = () => {
 
@@ -26,7 +26,6 @@ const Header = () => {
 
   const dispatch = useDispatch();
 
-  const isLoading = useSelector(state => state.isLoading); 
   const user = useSelector(state => state.data);
   const nightTheme = useSelector(state => state.users.settings.appearance.nightTheme);
   const gallery = useSelector(state => state.users.settings.appearance.gallery);
@@ -38,14 +37,14 @@ const Header = () => {
     dispatch(logOutUserRequest());
 
     const auth = getAuth();
-      signOut(auth).then(() => {
-        dispatch(logOutUserResponce());
-        console.log('Sign-out successful');
-        
-      }).catch((error) => {
-        dispatch(logOutUserFailure(error));
-        console.log('An error happened.');
-      });
+    signOut(auth).then(() => {
+      dispatch(logOutUserResponce());
+      console.log('Sign-out successful');
+
+    }).catch((error) => {
+      dispatch(logOutUserFailure(error));
+      console.log('An error happened.');
+    });
 
   }
 
@@ -53,10 +52,10 @@ const Header = () => {
     dispatch(setNightTheme());
   }
 
-  useEffect(()=>{
-    if(nightTheme === null) return;
+  useEffect(() => {
+    if (nightTheme === null) return;
 
-    const setData = async() => {
+    const setData = async () => {
       await setDoc(doc(db, "users", user.uid), {
         settings: {
           appearance: {
@@ -70,24 +69,21 @@ const Header = () => {
     }
 
     setData();
-     
+
   }, [nightTheme]);
 
   return (
 
-    <AppBar color={nightTheme? "secondary" : "primary"} position="static">
+    <AppBar color={nightTheme ? "secondary" : "primary"} position="static">
       <Toolbar variant='dense'>
-        <Grid>
-        {isLoading ? <Loading /> : null}
-        </Grid>
         <Grid container alignItems={"center"}>
           <Box className='avatar'>
-            {(Object.values(user).length > 0) ? 
-            <img src={user.photoURL ? user.photoURL : null}
-                  alt={user.name ? user.name : "image"}
+            {(Object.values(user).length > 0) ?
+              <img src={user.photoURL ? user.photoURL : null}
+                alt={user.name ? user.name : "image"}
               />
-            :
-            null}
+              :
+              null}
           </Box>
           <Box ml={1}>
             {user.name ? user.name : null}
@@ -100,16 +96,16 @@ const Header = () => {
         </Grid>
         <Grid container justifyContent={"flex-end"}>
           <Box mr={1}>
-            <Button variant="outlined" color={nightTheme? "primary" : "secondary"} onClick={changeTheme}>
+            <Button variant="outlined" color={nightTheme ? "primary" : "secondary"} onClick={changeTheme}>
               <Brightness2Icon />
             </Button>
           </Box>
           {
-            (Object.values(user).length > 0) ? 
-              <Button onClick={logOut} color={nightTheme? "primary" : "secondary"} variant={"outlined"}>Logout</Button>
-            : 
+            (Object.values(user).length > 0) ?
+              <Button onClick={logOut} color={nightTheme ? "primary" : "secondary"} variant={"outlined"}>Logout</Button>
+              :
               <NavLink to={LOGIN_ROUTE}>
-                  <Button color={nightTheme? "primary" : "secondary"} variant={"outlined"}>Login</Button>
+                <Button color={nightTheme ? "primary" : "secondary"} variant={"outlined"}>Login</Button>
               </NavLink>
           }
         </Grid>

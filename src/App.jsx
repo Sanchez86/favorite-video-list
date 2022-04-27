@@ -1,6 +1,7 @@
 import { BrowserRouter } from 'react-router-dom';
 import React from 'react';
 import { useSelector } from 'react-redux';
+import useAuth from './auth';
 import './App.css';
 import Header from './components/Header';
 import AppRouter from './components/AppRouter/AppRouter';
@@ -8,7 +9,6 @@ import { ThemeProvider } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
 import Footer from './components/Footer/Footer';
 import CircularIndeterminate from './components/Loading';
-import useAuth from './auth';
 
 const theme = createTheme({
   palette: {
@@ -26,7 +26,7 @@ const theme = createTheme({
 function App() {
   const isLoading = useSelector(state => state.isLoading);
   const user = useAuth();
-
+  console.log('user1', user);
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
@@ -35,9 +35,12 @@ function App() {
           {isLoading && <CircularIndeterminate />}
 
           {!isLoading && (<>
-            <Header />
+
+            {user && <Header />}
+
             <AppRouter user={user} />
             {/* <Footer /> */}
+
           </>)}
 
 

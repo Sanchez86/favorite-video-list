@@ -7,7 +7,6 @@ import { getAuth, signOut } from "firebase/auth";
 import { db } from '../../firebase/firebase';
 import { doc, setDoc } from "firebase/firestore";
 import { useSelector, useDispatch } from 'react-redux';
-import Loading from '../Loading';
 import {
   logOutUserRequest,
   logOutUserResponce,
@@ -21,7 +20,6 @@ const Header = () => {
   const toggleClass = () => {
     const add = document.querySelector('.add-film');
     add.classList.toggle("active");
-    console.log('add', add)
   }
 
   const dispatch = useDispatch();
@@ -90,9 +88,13 @@ const Header = () => {
           </Box>
         </Grid>
         <Grid>
-          <Fab color="primary" aria-label="add" onClick={toggleClass}>
+          {user.name && <Fab
+            color="primary"
+            size='small'
+            aria-label="add"
+            onClick={toggleClass}>
             +
-          </Fab>
+          </Fab>}
         </Grid>
         <Grid container justifyContent={"flex-end"}>
           <Box mr={1}>

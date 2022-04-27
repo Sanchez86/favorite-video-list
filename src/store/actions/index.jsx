@@ -9,6 +9,7 @@ export const createDocRef = createAsyncThunk('createDocRef', async (user) => {
     const docSnap = await getDoc(docRef);
 
     if (docSnap.data()) {
+        //console.log('docSnap.data()', docSnap.data());
         return docSnap.data();
     } else {
         return {

@@ -14,7 +14,7 @@ const { auth } = firebase;
 const useAuth = () => {
     const dispatch = useDispatch();
     const [user] = useAuthState(auth());
-
+    console.log('user auth', user);
     useEffect(() => {
         if (user) {
             const userData = transformFireBaseUserToEntity(user);
@@ -27,7 +27,7 @@ const useAuth = () => {
                 dispatch(loading());
             }, 1000)
         }
-    });
+    }, [user]);
 
     return user;
 

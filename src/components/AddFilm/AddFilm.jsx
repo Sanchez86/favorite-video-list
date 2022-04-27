@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button, TextField, Box, Typography, Rating, FormControl, Select, MenuItem } from '@mui/material';
 import { doc, setDoc } from "firebase/firestore";
 import { getStorage, ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import { db } from '../../firebase/firebase';
 import { setFilm } from '../../store/actions/films';
-import { useDispatch, useSelector } from 'react-redux';
 import nanoid from 'nanoid';
 import './style.css';
 
 const AddFilm = () => {
 
   const dispatch = useDispatch();
+
+  const [isLoading, setIsLoading] = useState(false);
+
   const films = useSelector((state) => state.users.films);
   const user = useSelector((state) => state.data);
 
@@ -35,6 +38,7 @@ const AddFilm = () => {
   }
 
   const sendData = () => {
+    setIsLoading(true);
 
     const storageRef = ref(storage, image.name);
     const uploadTask = uploadBytesResumable(storageRef, image);
@@ -46,9 +50,9 @@ const AddFilm = () => {
         console.log('error', error);
       },
       () => {
+
         getDownloadURL(uploadTask.snapshot.ref)
           .then(url => {
-
             const filmData = {
               name,
               category,
@@ -59,8 +63,13 @@ const AddFilm = () => {
               year,
               id: nanoid(),
             }
-            dispatch(setFilm(filmData));
 
+            return filmData;
+
+          }).then((filmData) => {
+
+            dispatch(setFilm(filmData));
+            setIsLoading(false);
           })
       }
     )
@@ -217,8 +226,10 @@ const AddFilm = () => {
             style={{ marginTop: '15px' }}
             onClick={sendData}
             variant={'outlined'}
-            color={"secondary"}>
-            Send
+            color={"secondary"}
+            disabled={isLoading}
+          >
+            {!isLoading ? 'Добавить' : 'Отправляется'}
           </Button>
 
       }

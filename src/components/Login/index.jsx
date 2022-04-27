@@ -27,10 +27,10 @@ const Login = () => {
         //const token = credential.accessToken;
         // The signed-in user info.
         const user = result.user;
-        
-        dispatch(loadUserDataResponce(user)); 
+
+        dispatch(loadUserDataResponce(user));
         console.log('user', user);
-       
+
       }).catch((error) => {
         // Handle Errors here.
         //const errorCode = error.code;
@@ -39,7 +39,7 @@ const Login = () => {
         //const email = error.email;
         // The AuthCredential type that was used.
         //const credential = GoogleAuthProvider.credentialFromError(error);
-        
+
         dispatch(loadUserDataFailure(error));
         console.log('error', error);
       });
@@ -48,8 +48,13 @@ const Login = () => {
 
   return (
     <div className='login'>
-      <div>Login</div>
-      <Button onClick={login} variant={'outlined'} color={"secondary"} >Enter with help Google</Button>
+      <h3>Login</h3>
+      <Button
+        onClick={login}
+        variant={'outlined'}
+        color={"secondary"} >
+        Enter with help Google
+      </Button>
     </div>
   );
 }

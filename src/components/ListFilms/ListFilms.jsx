@@ -7,11 +7,15 @@ const ListFilms = () => {
 
   let films = useSelector((state) => state.users.films);
 
+  if (!films) {
+    return <>'Ваших видео пока что нет'</>;
+  }
+
   return (
     <Grid container spacing={2}>
-
       {
-        films && films.map((item, i) => {
+        films.map((item, i) => {
+
           return (
             <Grid key={i} item xs={12} sm={4} md={3} lg={2}>
               <Film item={item} />

@@ -8,5 +8,18 @@ export const createDocRef = createAsyncThunk('createDocRef', async (user) => {
     const docRef = doc(db, "users", user.uid);
     const docSnap = await getDoc(docRef);
 
-    return docSnap.data();
+    if (docSnap.data()) {
+        return docSnap.data();
+    } else {
+        return {
+            settings: {
+                appearance: {
+                    nightTheme: null,
+                    gallery: 'slider',
+                    markup: 'list'
+                },
+            },
+            films: [],
+        };
+    }
 });

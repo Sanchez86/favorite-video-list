@@ -1,4 +1,5 @@
 import { AppBar, Button, Grid, Toolbar, Box, Fab } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
 import Brightness2Icon from '@material-ui/icons/Brightness2';
 import React, { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
@@ -93,7 +94,7 @@ const Header = () => {
             size='small'
             aria-label="add"
             onClick={toggleClass}>
-            +
+            <AddIcon />
           </Fab>}
         </Grid>
         <Grid container justifyContent={"flex-end"}>

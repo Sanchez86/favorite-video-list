@@ -46,6 +46,10 @@ const initialState = {
 const reducer = createReducer(initialState, (builder) => {
   builder
 
+    .addCase(delateFilm, (state, action) => {
+      state.users.films = action.payload;
+    })
+
     .addCase(loading, (state, action) => {
       state.isLoading = action.payload;
     })

@@ -40,39 +40,55 @@ const AddFilm = () => {
   const sendData = () => {
     setIsLoading(true);
 
-    const storageRef = ref(storage, image.name);
-    const uploadTask = uploadBytesResumable(storageRef, image);
+    if (image) {
+      const storageRef = ref(storage, image.name);
+      const uploadTask = uploadBytesResumable(storageRef, image);
 
-    uploadTask.on(
-      "state_change",
-      snapshot => { },
-      error => {
-        console.log('error', error);
-      },
-      () => {
+      uploadTask.on(
+        "state_change",
+        snapshot => { },
+        error => {
+          console.log('error', error);
+        },
+        () => {
 
-        getDownloadURL(uploadTask.snapshot.ref)
-          .then(url => {
-            const filmData = {
-              name,
-              category,
-              ganre,
-              filmURL,
-              posterURL: url,
-              rating,
-              year,
-              id: nanoid(),
-            }
+          getDownloadURL(uploadTask.snapshot.ref)
+            .then(url => {
+              const filmData = {
+                name,
+                category,
+                ganre,
+                filmURL,
+                posterURL: url,
+                rating,
+                year,
+                id: nanoid(),
+              }
 
-            return filmData;
+              return filmData;
 
-          }).then((filmData) => {
+            }).then((filmData) => {
 
-            dispatch(setFilm(filmData));
-            setIsLoading(false);
-          })
+              dispatch(setFilm(filmData));
+            })
+        }
+      )
+    } else {
+      const filmData = {
+        name,
+        category,
+        ganre,
+        filmURL,
+        posterURL: '',
+        rating,
+        year,
+        id: nanoid(),
       }
-    )
+
+      dispatch(setFilm(filmData));
+    }
+
+
 
   }
 
@@ -89,7 +105,7 @@ const AddFilm = () => {
           },
         },
         films: films,
-      })
+      }).then(() => setIsLoading(false));
     }
 
     setData();
@@ -157,6 +173,7 @@ const AddFilm = () => {
       </Box>
       <Box>
         <TextField
+          required
           style={{ marginBottom: '15px' }}
           size="small"
           label="Название"
@@ -217,9 +234,11 @@ const AddFilm = () => {
           />
         </Button>
       </Box>
+
+      {/* || filmURL === '' || category === '' || ganre === '' ||
+          year <= 0 || rating === 1 || image === null) */}
       {
-        (name === '' || filmURL === '' || category === '' || ganre === '' ||
-          year <= 0 || rating === 1 || image === null) ?
+        (name === '') ?
           null
           :
           <Button

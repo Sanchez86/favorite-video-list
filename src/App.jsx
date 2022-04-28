@@ -24,13 +24,15 @@ const theme = createTheme({
 });
 
 function App() {
+  const nightTheme = useSelector(state => state.users.settings.appearance.nightTheme);
   const isLoading = useSelector(state => state.isLoading);
   const user = useAuth();
   console.log('user1', user);
   return (
-    <div className="App">
+    <div className={`App ${nightTheme ? 'night-theme' : null}`} >
       <ThemeProvider theme={theme}>
         <BrowserRouter>
+
 
           {isLoading && <CircularIndeterminate />}
 
@@ -39,7 +41,7 @@ function App() {
             {user && <Header />}
 
             <AppRouter user={user} />
-            {/* <Footer /> */}
+            <Footer />
 
           </>)}
 

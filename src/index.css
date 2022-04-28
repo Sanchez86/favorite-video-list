@@ -7,7 +7,62 @@ body {
   -moz-osx-font-smoothing: grayscale;
   color: black;
   background-color: #E7EBF0;
+  color: #22272e;
+}
 
+a {
+  color: #22272e;
+}
+
+html,
+body,
+#root,
+.App {
+  min-height: 100%;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+.App {
+  padding: 50px 0;
+  position: relative;
+}
+
+@media only screen and (max-width: 423px) {
+  .App {
+    padding-top: 100px;
+  }
+}
+
+#root .night-theme h1,
+#root .night-theme h2,
+#root .night-theme h3,
+#root .night-theme h4,
+#root .night-theme h5,
+#root .night-theme h6,
+#root .night-theme a,
+#root .night-theme p,
+#root .night-theme strong {
+  color: #adbac7;
+}
+
+#root .night-theme .card-element {
+  color: #adbac7;
+  background-color: rgb(55 62 71 / 79%);
+  padding: 5px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  border: 1px solid #707982;
+  border-radius: 6px;
+}
+
+.night-theme {
+  background-color: #22272e;
 }
 
 code {
@@ -24,9 +79,16 @@ code {
 .footer-link {
   display: flex;
   justify-content: center;
-  color: #333;
-  text-decoration: none;
   padding: 10px;
+  font-size: 12px;
+  position: absolute;
+  bottom: 5px;
+  left: 0;
+  right: 0;
+}
+
+.footer-link a {
+  text-decoration: none;
 }
 
 .hidden {

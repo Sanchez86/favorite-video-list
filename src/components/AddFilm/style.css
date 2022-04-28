@@ -16,6 +16,23 @@
     top: 48px;
 }
 
+.night-theme .add-film {
+    background-color: #2d333b;
+}
+
+#root .night-theme .add-film>div>div>div,
+#root .night-theme .btn-upload,
+#root .night-theme .btn-send {
+    color: #adbac7;
+    background-color: rgb(55 62 71 / 79%);
+    padding: 5px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    border: 1px solid #707982;
+    border-radius: 6px;
+}
+
 @media only screen and (max-width: 786px) {
     .add-film {
         width: 91%;

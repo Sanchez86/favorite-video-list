@@ -224,6 +224,7 @@ const AddFilm = () => {
         <Button
           variant="contained"
           component="label"
+          className='btn-upload'
         >
           Загрузить постер
           <input
@@ -235,20 +236,19 @@ const AddFilm = () => {
         </Button>
       </Box>
 
-      {/* || filmURL === '' || category === '' || ganre === '' ||
-          year <= 0 || rating === 1 || image === null) */}
       {
         (name === '') ?
           null
           :
           <Button
+            className='btn-send'
             style={{ marginTop: '15px' }}
             onClick={sendData}
             variant={'outlined'}
             color={"secondary"}
             disabled={isLoading}
           >
-            {!isLoading ? 'Добавить' : 'Отправляется'}
+            {!isLoading ? 'Добавить' : 'Отправляется...'}
           </Button>
 
       }

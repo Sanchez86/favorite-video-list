@@ -73,10 +73,10 @@ const Header = () => {
 
   return (
 
-    <AppBar color={nightTheme ? "secondary" : "primary"} position="static">
+    <AppBar position="fixed" color={nightTheme ? "secondary" : "primary"}>
       <Toolbar variant='dense'>
         <Grid container alignItems={"center"}>
-          <Box className='avatar'>
+          <Box m={0.5} className='avatar'>
             {(user.photoURL ?
               <img src={user.photoURL}
                 alt={user.name ? user.name : "image"}
@@ -84,7 +84,7 @@ const Header = () => {
               :
               null)}
           </Box>
-          <Box ml={1}>
+          <Box m={0.5}>
             {user.name ? user.name : null}
           </Box>
         </Grid>
@@ -98,19 +98,21 @@ const Header = () => {
           </Fab>}
         </Grid>
         <Grid container justifyContent={"flex-end"}>
-          <Box mr={1}>
+          <Box m={0.5}>
             <Button variant="outlined" color={nightTheme ? "primary" : "secondary"} onClick={changeTheme}>
               <Brightness2Icon />
             </Button>
           </Box>
-          {
-            (Object.values(user).length > 0) ?
-              <Button onClick={logOut} color={nightTheme ? "primary" : "secondary"} variant={"outlined"}>Logout</Button>
-              :
-              <NavLink to={LOGIN_ROUTE}>
-                <Button color={nightTheme ? "primary" : "secondary"} variant={"outlined"}>Login</Button>
-              </NavLink>
-          }
+          <Box m={0.5}>
+            {
+              (Object.values(user).length > 0) ?
+                <Button onClick={logOut} color={nightTheme ? "primary" : "secondary"} variant={"outlined"}>Logout</Button>
+                :
+                <NavLink to={LOGIN_ROUTE}>
+                  <Button color={nightTheme ? "primary" : "secondary"} variant={"outlined"}>Login</Button>
+                </NavLink>
+            }
+          </Box>
         </Grid>
       </Toolbar>
     </AppBar>

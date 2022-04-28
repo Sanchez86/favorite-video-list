@@ -32,10 +32,12 @@ const Film = ({ item }) => {
         {item.posterURL ? <img src={item.posterURL} width={50} height={50} alt={item.name} /> : null}
 
         <div className='card-content'>
-          {item.category && <button className='card-element'>{item.category}</button>}
-          {item.ganre && <button className='card-element'>{item.ganre}</button>}
+          <div>
+            {item.category && <button className='card-element'>{item.category}</button>}
+            {item.ganre && <button className='card-element'>{item.ganre}</button>}
 
-          {item.year && <button className='card-element' readOnly>{item.year}</button>}
+            {item.year && <button className='card-element' readOnly>{item.year}</button>}
+          </div>
 
           <Button
             style={{ marginTop: '15px' }}

@@ -23,11 +23,13 @@ import {
 import {
   setFilm,
   delateFilm,
+  isOpenAddCard
 } from '../actions/films';
 
 import { setNightTheme } from '../actions/userSettings';
 
 const initialState = {
+  isOpenAddCard: false,
   data: {},
   isLoading: true,
   error: '',
@@ -45,6 +47,9 @@ const initialState = {
 
 const reducer = createReducer(initialState, (builder) => {
   builder
+    .addCase(isOpenAddCard, (state) => {
+      state.isOpenAddCard = !state.isOpenAddCard;
+    })
 
     .addCase(delateFilm, (state, action) => {
       state.users.films = action.payload;

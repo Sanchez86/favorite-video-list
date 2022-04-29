@@ -4,7 +4,7 @@ import { Button, TextField, Box, Typography, Rating, FormControl, Select, MenuIt
 import { doc, setDoc } from "firebase/firestore";
 import { getStorage, ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import { db } from '../../firebase/firebase';
-import { setFilm } from '../../store/actions/films';
+import { setFilm, isOpenAddCard } from '../../store/actions/films';
 import nanoid from 'nanoid';
 import './style.css';
 
@@ -20,6 +20,8 @@ const AddFilm = () => {
   const nightTheme = useSelector(state => state.users.settings.appearance.nightTheme);
   const gallery = useSelector(state => state.users.settings.appearance.gallery);
   const markup = useSelector(state => state.users.settings.appearance.markup);
+
+  const isOpen = useSelector((state) => state.isOpenAddCard);
 
   const [name, setName] = useState('');
   const [filmURL, setFilmURL] = useState('');
@@ -70,6 +72,7 @@ const AddFilm = () => {
             }).then((filmData) => {
 
               dispatch(setFilm(filmData));
+              dispatch(isOpenAddCard());
             })
         }
       )
@@ -86,10 +89,8 @@ const AddFilm = () => {
       }
 
       dispatch(setFilm(filmData));
+      dispatch(isOpenAddCard());
     }
-
-
-
   }
 
   useEffect(() => {
@@ -128,7 +129,7 @@ const AddFilm = () => {
   };
 
   return (
-    <div className='add-film'>
+    <div className={`add-film ${isOpen ? 'active' : null}`}>
       <Box>
         <FormControl>
           <Select

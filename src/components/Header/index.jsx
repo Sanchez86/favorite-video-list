@@ -8,20 +8,17 @@ import { getAuth, signOut } from "firebase/auth";
 import { db } from '../../firebase/firebase';
 import { doc, setDoc } from "firebase/firestore";
 import { useSelector, useDispatch } from 'react-redux';
+import AddFilm from '../AddFilm/AddFilm';
 import {
   logOutUserRequest,
   logOutUserResponce,
   logOutUserFailure
 } from '../../store/actions/logOutUser';
+import { isOpenAddCard } from '../../store/actions/films';
 import { setNightTheme } from '../../store/actions/userSettings';
 import './style.css';
 
 const Header = () => {
-
-  const toggleClass = () => {
-    const add = document.querySelector('.add-film');
-    add.classList.toggle("active");
-  }
 
   const dispatch = useDispatch();
 
@@ -51,6 +48,10 @@ const Header = () => {
     dispatch(setNightTheme());
   }
 
+  const handlerAddCard = () => {
+    dispatch(isOpenAddCard());
+  }
+
   useEffect(() => {
     if (nightTheme === null) return;
 
@@ -75,6 +76,9 @@ const Header = () => {
 
     <AppBar position="fixed" color={nightTheme ? "secondary" : "primary"}>
       <Toolbar variant='dense'>
+
+        <AddFilm />
+
         <Grid container alignItems={"center"}>
           <Box m={0.5} className='avatar'>
             {(user.photoURL ?
@@ -93,7 +97,7 @@ const Header = () => {
             color="primary"
             size='small'
             aria-label="add"
-            onClick={toggleClass}>
+            onClick={handlerAddCard}>
             <AddIcon />
           </Fab>}
         </Grid>

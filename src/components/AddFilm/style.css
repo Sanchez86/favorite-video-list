@@ -38,3 +38,9 @@
         width: 91%;
     }
 }
+
+@media only screen and (max-width: 424px) {
+    .add-film.active {
+        top: 89px;
+    }
+}

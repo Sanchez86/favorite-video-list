@@ -1,13 +1,13 @@
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 import { AppBar, Button, Grid, Toolbar, Box, Fab } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import Brightness2Icon from '@material-ui/icons/Brightness2';
-import React, { useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
 import { LOGIN_ROUTE } from '../../utils/consts';
 import { getAuth, signOut } from "firebase/auth";
 import { db } from '../../firebase/firebase';
 import { doc, setDoc } from "firebase/firestore";
-import { useSelector, useDispatch } from 'react-redux';
 import AddFilm from '../AddFilm/AddFilm';
 import {
   logOutUserRequest,
@@ -110,10 +110,10 @@ const Header = () => {
           <Box m={0.5}>
             {
               (Object.values(user).length > 0) ?
-                <Button onClick={logOut} color={nightTheme ? "primary" : "secondary"} variant={"outlined"}>Logout</Button>
+                <Button onClick={logOut} color={nightTheme ? "primary" : "secondary"} variant={"outlined"}>Выйти</Button>
                 :
                 <NavLink to={LOGIN_ROUTE}>
-                  <Button color={nightTheme ? "primary" : "secondary"} variant={"outlined"}>Login</Button>
+                  <Button color={nightTheme ? "primary" : "secondary"} variant={"outlined"}>Войти</Button>
                 </NavLink>
             }
           </Box>

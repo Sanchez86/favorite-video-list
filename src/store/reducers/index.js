@@ -23,7 +23,8 @@ import {
 import {
   setFilm,
   delateFilm,
-  isOpenAddCard
+  isOpenAddCard,
+  updateFilm
 } from '../actions/films';
 
 import { setNightTheme } from '../actions/userSettings';
@@ -47,6 +48,18 @@ const initialState = {
 
 const reducer = createReducer(initialState, (builder) => {
   builder
+
+    .addCase(updateFilm, (state, action) => {
+      console.log('updateFilm', action.payload);
+      const itemIndex = state.users.films.findIndex(film => film.id === action.payload.id);
+      const updatedFilms = [
+        ...state.users.films.slice(0, itemIndex),
+        action.payload,
+        ...state.users.films.slice(itemIndex + 1),
+      ];
+      state.users.films = updatedFilms;
+    })
+
     .addCase(isOpenAddCard, (state) => {
       state.isOpenAddCard = !state.isOpenAddCard;
     })
@@ -72,7 +85,6 @@ const reducer = createReducer(initialState, (builder) => {
       state.error = ''; // обнулили
     })
     .addCase(loadUserDataResponce, (state, action) => {
-      console.log('payload - loadUserDataResponce', action.payload);
       state.data = { ...action.payload }
       state.isLoading = false;
     })

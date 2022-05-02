@@ -1,6 +1,7 @@
 import Login from "./components/Login";
 import Main from "./components/Main";
-import { LOGIN_ROUTE, MAIN_ROUTE } from "./utils/consts";
+import Edit from "./components/Edit";
+import { LOGIN_ROUTE, MAIN_ROUTE, EDIT_ROUTE } from "./utils/consts";
 
 export const publicRoutes = [
     {
@@ -10,9 +11,13 @@ export const publicRoutes = [
 ];
 
 // for authorized users
-export const privateRoutes =[
+export const privateRoutes = [
     {
         path: MAIN_ROUTE,
         Component: Main
-    }
+    },
+    {
+        path: EDIT_ROUTE,
+        Component: Edit
+    },
 ];

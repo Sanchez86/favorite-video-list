@@ -1,0 +1,15 @@
+.wrap-clear {
+    position: relative;
+}
+
+.btn-clear {
+    position: absolute;
+    right: 15px;
+    top: 8px;
+    cursor: pointer;
+}
+
+.isSuccess,
+.isSuccess+p {
+    color: green;
+}

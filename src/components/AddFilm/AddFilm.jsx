@@ -121,13 +121,6 @@ const AddFilm = () => {
 
   }, [films]);
 
-  const changeCategory = (event) => {
-    setCategory(event.target.value);
-  };
-  const changeGanre = (event) => {
-    setGanre(event.target.value);
-  };
-
   return (
     <div className={`add-film ${isOpen ? 'active' : null}`}>
       <Box>
@@ -137,7 +130,7 @@ const AddFilm = () => {
             value={category}
             size="small"
             fullWidth
-            onChange={changeCategory}
+            onChange={(e) => setCategory(e.target.value)}
             displayEmpty
             inputProps={{ 'aria-label': 'Without label' }}
           >
@@ -158,7 +151,7 @@ const AddFilm = () => {
             size="small"
             value={ganre}
             fullWidth
-            onChange={changeGanre}
+            onChange={(e) => setGanre(e.target.value)}
             displayEmpty
             inputProps={{ 'aria-label': 'Without label' }}
           >

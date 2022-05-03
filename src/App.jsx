@@ -29,7 +29,7 @@ function App() {
   const user = useAuth();
 
   return (
-    <div className={`App ${nightTheme ? 'night-theme' : null}`} >
+    <div className={`App ${nightTheme ? 'night-theme' : null}`}>
       <ThemeProvider theme={theme}>
         <BrowserRouter>
 

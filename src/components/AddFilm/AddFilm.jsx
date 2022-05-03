@@ -228,6 +228,7 @@ const AddFilm = () => {
             onChange={handleChange}
           />
         </Button>
+        {image ? image.name : null}
       </Box>
 
       {

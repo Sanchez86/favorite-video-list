@@ -33,6 +33,11 @@
     border-radius: 6px;
 }
 
+#root .night-theme input::placeholder,
+#root .night-theme .add-film label {
+    color: #adbac7;
+}
+
 @media only screen and (max-width: 786px) {
     .add-film {
         width: 91%;

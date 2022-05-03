@@ -10,6 +10,7 @@ import { Button, TextField, Box, Typography, Rating, FormControl, Select, MenuIt
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import PublishedWithChangesIcon from '@mui/icons-material/PublishedWithChanges';
 import ClearIcon from '@mui/icons-material/Clear';
+import Grid from '@mui/material/Grid';
 import './style.css';
 
 const Edit = ({ match }) => {
@@ -112,173 +113,176 @@ const Edit = ({ match }) => {
             setData();
         }
     }
-
+    console.log('image', image);
     return (
-        <Container>
-            <Box>
-                <Link to="/main" >
-                    <Button
-                        variant="contained"
-                        component="label"
-                        className='btn'
-                    >
-                        <ArrowBackIcon />
-                        Назад
-                    </Button>
-                </Link>
+        <Container className='edit-film'>
+            <Grid container spacing={{ xs: 2, md: 3 }}>
 
-                <Button
-                    variant="contained"
-                    component="label"
-                    className='btn'
-                    onClick={handlerEdit}
-                    disabled={isLoading}
-                >
+                <Grid item xs={12} sm={4} md={4}>
+                    <Box>
+                        <Button
+                            variant="contained"
+                            component="label"
+                            className='btn-upload'
+                        >
+                            {image.length === 0 ? 'Загрузить постер' : 'Загрузить новый постер'}
 
-                    {
-                        isSuccess ?
-                            <>
-                                <PublishedWithChangesIcon className='isSuccess' />
-                                <p>Успешно обновлено</p>
-                            </>
-                            :
-                            !isLoading ?
-                                <>
-                                    Сохранить изменения
-                                    <PublishedWithChangesIcon />
-                                </>
+                            <input
+                                type="file"
+                                required
+                                hidden
+                                onChange={handleChange}
+                            />
+                        </Button>
+                    </Box>
+                    {image.name ? image.name :
+                        <>
+                            {image.length === 0 ? 'Постер пока что не загружен'
                                 :
-                                'Изменения сохраняются...'
+                                <Box className='edit-poster'><img src={image} alt={name} /></Box>}
+                        </>
                     }
+                </Grid>
+
+                <Grid item xs={12} sm={8} md={8}>
+
+                    <Box>
+                        <FormControl>
+                            <Select
+                                style={{ width: '100%', marginBottom: '15px' }}
+                                value={category}
+                                size="small"
+                                fullWidth
+                                displayEmpty
+                                onChange={(e) => setCategory(e.target.value)}
+                                inputProps={{ 'aria-label': 'Without label' }}
+                            >
+                                <MenuItem value="" disabled>
+                                    Выберете категорию
+                                </MenuItem>
+                                <MenuItem value={"Фильмы"}>Фильмы</MenuItem>
+                                <MenuItem value={"Сериалы"}>Сериалы</MenuItem>
+                                <MenuItem value={"Мультфильмы"}>Мультфильмы</MenuItem>
+                                <MenuItem value={"Аниме"}>Аниме</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Box>
+                    <Box>
+                        <FormControl>
+                            <Select
+                                style={{ width: '100%', marginBottom: '15px' }}
+                                size="small"
+                                value={ganre}
+                                fullWidth
+                                displayEmpty
+                                onChange={(e) => setGanre(e.target.value)}
+                                inputProps={{ 'aria-label': 'Without label' }}
+                            >
+                                <MenuItem value="" disabled>
+                                    Выберете жанр
+                                </MenuItem>
+                                <MenuItem value={"Комедии"}>Комедии</MenuItem>
+                                <MenuItem value={"Драммы"}>Драммы</MenuItem>
+                                <MenuItem value={"Мелодраммы"}>Мелодраммы</MenuItem>
+                                <MenuItem value={"Боевики"}>Боевики</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Box>
+                    <Box className='wrap-clear'>
+                        <TextField
+                            required
+                            style={{ marginBottom: '15px' }}
+                            size="small"
+                            label="Название"
+                            fullWidth
+                            variant={"outlined"}
+                            value={name}
+                            name={"film-name"}
+                            onChange={e => setName(e.target.value)}
+                        />
+                        <ClearIcon
+                            className='btn-clear'
+                            onClick={() => setName('')}
+                        />
+                    </Box>
+                    <Box className='wrap-clear'>
+                        <TextField
+                            style={{ marginBottom: '15px' }}
+                            label={`Ссылка на ${film.category ? film.category : ''}`}
+                            fullWidth
+                            size="small"
+                            variant={"outlined"}
+                            value={filmURL}
+                            name={"setFilmURL"}
+                            onChange={e => setFilmURL(e.target.value)}
+                        />
+                        <ClearIcon
+                            className='btn-clear'
+                            onClick={() => setFilmURL('')}
+                        />
+                    </Box>
+                    <Box component="fieldset" mb={3} borderColor="transparent">
+                        <Typography component="legend">Рейтинг</Typography>
+                        <Rating
+                            style={{ width: '100%', marginBottom: '15px' }}
+                            name="simple-controlled"
+                            value={rating}
+                            onChange={(event, newValue) => {
+                                setRating(newValue);
+                            }}
+                        />
+                    </Box>
+                    <Box>
+                        <TextField
+                            style={{ width: '100%', marginBottom: '15px' }}
+                            size="small"
+                            label="Год"
+                            type="number"
+                            variant={"outlined"}
+                            value={year}
+                            name={"setYear"}
+                            onChange={e => setYear(e.target.value)}
+                        />
+                    </Box>
+                    <Box className='edit-film-footer'>
+                        <Box m={2}>
+                            <Link to="/main" className='back' >
+                                <ArrowBackIcon />
+                                Назад
+                            </Link>
+                        </Box>
+
+                        {name ?
+
+                            <Button
+                                variant="contained"
+                                component="label"
+                                className='btn'
+                                onClick={handlerEdit}
+                                disabled={isLoading}
+                            >
+
+                                {
+                                    isSuccess ?
+                                        <>
+                                            <PublishedWithChangesIcon className='isSuccess' />
+                                            <p>Успешно обновлено</p>
+                                        </>
+                                        :
+                                        !isLoading ?
+                                            <p>Сохранить изменения</p>
+                                            :
+                                            'Изменения сохраняются...'
+                                }
+
+                            </Button>
+
+                            : null}
 
 
-                </Button>
-            </Box>
-            <Box>
-                <FormControl>
-                    <Select
-                        style={{ width: '100%', marginBottom: '15px' }}
-                        value={category}
-                        size="small"
-                        fullWidth
-                        displayEmpty
-                        onChange={(e) => setCategory(e.target.value)}
-                        inputProps={{ 'aria-label': 'Without label' }}
-                    >
-                        <MenuItem value="" disabled>
-                            Выберете категорию
-                        </MenuItem>
-                        <MenuItem value={"Фильмы"}>Фильмы</MenuItem>
-                        <MenuItem value={"Сериалы"}>Сериалы</MenuItem>
-                        <MenuItem value={"Мультфильмы"}>Мультфильмы</MenuItem>
-                        <MenuItem value={"Аниме"}>Аниме</MenuItem>
-                    </Select>
-                </FormControl>
-            </Box>
-            <Box>
-                <FormControl>
-                    <Select
-                        style={{ width: '100%', marginBottom: '15px' }}
-                        size="small"
-                        value={ganre}
-                        fullWidth
-                        displayEmpty
-                        onChange={(e) => setGanre(e.target.value)}
-                        inputProps={{ 'aria-label': 'Without label' }}
-                    >
-                        <MenuItem value="" disabled>
-                            Выберете жанр
-                        </MenuItem>
-                        <MenuItem value={"Комедии"}>Комедии</MenuItem>
-                        <MenuItem value={"Драммы"}>Драммы</MenuItem>
-                        <MenuItem value={"Мелодраммы"}>Мелодраммы</MenuItem>
-                        <MenuItem value={"Боевики"}>Боевики</MenuItem>
-                    </Select>
-                </FormControl>
-            </Box>
-            <Box className='wrap-clear'>
-                <TextField
-                    required
-                    style={{ marginBottom: '15px' }}
-                    size="small"
-                    label="Название"
-                    fullWidth
-                    variant={"outlined"}
-                    value={name}
-                    name={"film-name"}
-                    onChange={e => setName(e.target.value)}
-                />
-                <ClearIcon
-                    className='btn-clear'
-                    onClick={() => setName('')}
-                />
-            </Box>
-            <Box className='wrap-clear'>
-                <TextField
-                    style={{ marginBottom: '15px' }}
-                    label={`Ссылка на ${film.category ? film.category : ''}`}
-                    fullWidth
-                    size="small"
-                    variant={"outlined"}
-                    value={filmURL}
-                    name={"setFilmURL"}
-                    onChange={e => setFilmURL(e.target.value)}
-                />
-                <ClearIcon
-                    className='btn-clear'
-                    onClick={() => setFilmURL('')}
-                />
-            </Box>
-            <Box component="fieldset" mb={3} borderColor="transparent">
-                <Typography component="legend">Рейтинг</Typography>
-                <Rating
-                    style={{ width: '100%', marginBottom: '15px' }}
-                    name="simple-controlled"
-                    value={rating}
-                    onChange={(event, newValue) => {
-                        setRating(newValue);
-                    }}
-                />
-            </Box>
-            <Box>
-                <TextField
-                    style={{ width: '100%', marginBottom: '15px' }}
-                    size="small"
-                    label="Год"
-                    type="number"
-                    variant={"outlined"}
-                    value={year}
-                    name={"setYear"}
-                    onChange={e => setYear(e.target.value)}
-                />
-            </Box>
-
-            <Box>
-                <Button
-                    variant="contained"
-                    component="label"
-                    className='btn-upload'
-                >
-                    {image.length === 0 ? 'Загрузить постер' : 'Загрузить новый постер'}
-
-                    <input
-                        type="file"
-                        required
-                        hidden
-                        onChange={handleChange}
-                    />
-                </Button>
-            </Box>
-
-
-
-            {image.name ? image.name :
-                <>
-                    {image.length === 0 ? 'Постер пока что не загружен'
-                        :
-                        <Box><img src={image} alt={name} /></Box>}
-                </>
-            }
+                    </Box>
+                </Grid>
+            </Grid>
         </Container>
     );
 };

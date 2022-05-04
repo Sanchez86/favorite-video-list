@@ -17,7 +17,7 @@ const ListFilms = () => {
         films.map((item, i) => {
 
           return (
-            <Grid key={i} item xs={12} sm={4} md={3} lg={2}>
+            <Grid key={i} item pt={0} xs={12} sm={4} md={3} lg={2}>
               <Film item={item} />
             </Grid>
           )

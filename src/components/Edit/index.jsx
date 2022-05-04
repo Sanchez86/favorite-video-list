@@ -113,7 +113,7 @@ const Edit = ({ match }) => {
             setData();
         }
     }
-    console.log('image', image);
+
     return (
         <Container className='edit-film'>
             <Grid container spacing={{ xs: 2, md: 3 }}>
@@ -257,7 +257,7 @@ const Edit = ({ match }) => {
                             <Button
                                 variant="contained"
                                 component="label"
-                                className='btn'
+                                className='btn btn-edit'
                                 onClick={handlerEdit}
                                 disabled={isLoading}
                             >

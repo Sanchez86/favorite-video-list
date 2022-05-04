@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, TextField, Box, Typography, Rating, FormControl, Select, MenuItem } from '@mui/material';
+import PublishedWithChangesIcon from '@mui/icons-material/PublishedWithChanges';
+import SendIcon from '@mui/icons-material/Send';
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
+import DownloadIcon from '@mui/icons-material/Download';
+import DownloadDoneIcon from '@mui/icons-material/DownloadDone';
+import InsertLinkIcon from '@mui/icons-material/InsertLink';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Switch from '@mui/material/Switch';
 import { doc, setDoc } from "firebase/firestore";
 import { getStorage, ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import { db } from '../../firebase/firebase';
@@ -10,9 +18,16 @@ import './style.css';
 
 const AddFilm = () => {
 
+  const [loading, setLoading] = useState(true);
+  function handleClick() {
+    setLoading(!loading);
+    setImage(null);
+  }
+
   const dispatch = useDispatch();
 
   const [isLoading, setIsLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const films = useSelector((state) => state.users.films);
   const user = useSelector((state) => state.data);
@@ -30,14 +45,28 @@ const AddFilm = () => {
   const [year, setYear] = useState(1999);
   const [rating, setRating] = useState(1);
   const [image, setImage] = useState(null);
+  const [customImageUrl, setCustomImageUrl] = useState('');
 
   const storage = getStorage();
+
+  const hendlerReset = () => {
+    setName('');
+    setFilmURL('');
+    setYear(1999);
+    setRating(1);
+    setCategory('');
+    setGanre('');
+    setImage(null);
+    setCustomImageUrl('');
+  }
 
   const handleChange = (e) => {
     if (e.target.files[0]) {
       setImage(e.target.files[0]);
     }
   }
+
+  console.log('isLoading', loading);
 
   const sendData = () => {
     setIsLoading(true);
@@ -65,6 +94,7 @@ const AddFilm = () => {
                 rating,
                 year,
                 id: nanoid(),
+                customImageUrl
               }
 
               return filmData;
@@ -72,7 +102,8 @@ const AddFilm = () => {
             }).then((filmData) => {
 
               dispatch(setFilm(filmData));
-              dispatch(isOpenAddCard());
+              setIsSuccess(true);
+              setTimeout(() => { dispatch(isOpenAddCard()) }, 2000);
             })
         }
       )
@@ -86,10 +117,12 @@ const AddFilm = () => {
         rating,
         year,
         id: nanoid(),
+        customImageUrl
       }
 
       dispatch(setFilm(filmData));
-      dispatch(isOpenAddCard());
+      setIsSuccess(true);
+      setTimeout(() => { dispatch(isOpenAddCard()) }, 2000);
     }
   }
 
@@ -118,6 +151,12 @@ const AddFilm = () => {
     setCategory('');
     setGanre('');
     setImage(null);
+    setCustomImageUrl('');
+
+    setTimeout(() => {
+      setIsLoading(false);
+      setIsSuccess(false)
+    }, 2000);
 
   }, [films]);
 
@@ -181,7 +220,7 @@ const AddFilm = () => {
       <Box>
         <TextField
           style={{ marginBottom: '15px' }}
-          label={`Ссылка на ${category}`}
+          label={`Ссылка на ${name}`}
           fullWidth
           size="small"
           variant={"outlined"}
@@ -190,7 +229,7 @@ const AddFilm = () => {
           onChange={e => setFilmURL(e.target.value)}
         />
       </Box>
-      <Box component="fieldset" mb={3} borderColor="transparent">
+      <Box component="fieldset" mb={1} borderColor="transparent">
         <Typography component="legend">Рейтинг</Typography>
         <Rating
           style={{ width: '100%', marginBottom: '15px' }}
@@ -214,39 +253,86 @@ const AddFilm = () => {
         />
       </Box>
 
-      <Box>
-        <Button
-          variant="contained"
-          component="label"
-          className='btn-upload'
-        >
-          Загрузить постер
-          <input
-            type="file"
-            required
-            hidden
-            onChange={handleChange}
+      <Box className='img-block'>
+
+        <FormControlLabel
+          sx={{
+            display: 'block',
+          }}
+          control={
+            <Switch
+              checked={loading}
+              onChange={handleClick}
+              name="loading"
+            />
+          }
+          label={loading ? 'Вставить ссылку' : 'Загрузить картинку'}
+        />
+        <Box>
+          <Button
+            variant="contained"
+            component="label"
+            className='btn-upload'
+            disabled={loading}
+          >
+
+            {image?.name.length > 0 ? <DownloadDoneIcon /> : <DownloadIcon />}
+
+            <input
+              type="file"
+              required
+              hidden
+              onChange={handleChange}
+            />
+          </Button>
+          &nbsp; {image ? `Имя файла: ${image.name}` : null}
+        </Box>
+
+        <Box m={1}>
+          <p>или</p>
+        </Box>
+
+        <Box>
+          <TextField
+            disabled={!loading}
+            style={{ width: '100%', marginBottom: '15px' }}
+            size="small"
+            label="Кастомная ссылка"
+            type="text"
+            variant={"outlined"}
+            value={customImageUrl}
+            name={"setCustomImageUrl"}
+            onChange={e => setCustomImageUrl(e.target.value)}
           />
-        </Button>
-        {image ? image.name : null}
+        </Box>
       </Box>
 
-      {
-        (name === '') ?
-          null
-          :
-          <Button
-            className='btn-send'
-            style={{ marginTop: '15px' }}
-            onClick={sendData}
-            variant={'outlined'}
-            color={"secondary"}
-            disabled={isLoading}
-          >
-            {!isLoading ? 'Добавить' : 'Отправляется...'}
-          </Button>
+      <Box mt={1} display={'flex'} justifyContent={'space-between'}>
+        <Button
+          className='btn-reset'
+          color="secondary"
+          variant={"outlined"}
+          onClick={hendlerReset}>
+          Очистить все поля &nbsp;
+          <RestartAltIcon />
+        </Button>
 
-      }
+        <Button
+          className='btn-send'
+          onClick={sendData}
+          variant={'outlined'}
+          color={"secondary"}
+          disabled={!name ? true : isLoading ? isLoading : false}
+        >
+
+          {isSuccess ?
+            <>
+              <PublishedWithChangesIcon className='isSuccess' />
+              <p>Успешно добавлено</p>
+            </>
+            : !isLoading ? <>Добавить&nbsp; <SendIcon /></> : 'Отправляется...'}
+        </Button>
+      </Box>
 
     </div>
 

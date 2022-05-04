@@ -5,7 +5,7 @@ import useAuth from './auth';
 import './App.css';
 import Header from './components/Header';
 import AppRouter from './components/AppRouter/AppRouter';
-import { ThemeProvider } from '@mui/material';
+import { ThemeProvider, Box } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
 import Footer from './components/Footer/Footer';
 import CircularIndeterminate from './components/Loading';
@@ -40,7 +40,9 @@ function App() {
 
             {user && <Header />}
 
-            <AppRouter user={user} />
+            <Box mt={3}>
+              <AppRouter user={user} />
+            </Box>
             <Footer />
 
           </>)}

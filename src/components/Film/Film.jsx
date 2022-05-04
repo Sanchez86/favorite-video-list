@@ -31,7 +31,15 @@ const Film = ({ item }) => {
   return (
     <div className='card'>
       <div className="card-hover">
-        {item.posterURL ? <img src={item.posterURL} width={50} height={50} alt={item.name} /> : null}
+
+        {
+          item.customImageUrl
+            ?
+            <img src={item.customImageUrl} width={50} height={50} alt={item.name} />
+            :
+            item.posterURL ? <img src={item.posterURL} width={50} height={50} alt={item.name} /> : null
+        }
+
 
         <div className='card-content'>
           <Grid container justifyContent={"space-between"}>

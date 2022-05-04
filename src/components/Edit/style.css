@@ -18,9 +18,10 @@
     color: #adbac7;
 }
 
-#root .night-theme .edit-film>div>div>div,
+#root .night-theme .edit-film>div>div>div>div>div,
 #root .night-theme .btn-upload,
-#root .night-theme .btn-send {
+#root .night-theme .btn-send,
+#root .night-theme .btn-edit {
     color: #adbac7;
     background-color: rgb(55 62 71 / 79%);
     padding: 5px 16px;
@@ -29,6 +30,10 @@
     line-height: 20px;
     border: 1px solid #707982;
     border-radius: 6px;
+}
+
+.edit-film {
+    margin-top: 25px;
 }
 
 .edit-poster {

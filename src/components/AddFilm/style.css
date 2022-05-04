@@ -1,7 +1,7 @@
 .add-film {
     transition: 1s;
     position: absolute;
-    top: -500px;
+    top: -570px;
     left: 0;
     right: 0;
     z-index: 100;
@@ -20,9 +20,16 @@
     background-color: #2d333b;
 }
 
+.img-block {
+    border: 1px solid #c4c4c4;
+    border-radius: 10px;
+    padding: 5px;
+}
+
 #root .night-theme .add-film>div>div>div,
 #root .night-theme .btn-upload,
-#root .night-theme .btn-send {
+#root .night-theme .btn-send,
+#root .night-theme .btn-reset {
     color: #adbac7;
     background-color: rgb(55 62 71 / 79%);
     padding: 5px 16px;

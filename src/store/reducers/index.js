@@ -39,7 +39,8 @@ const initialState = {
       appearance: {
         nightTheme: null,
         gallery: 'slider',
-        markup: 'list'
+        markup: 'list',
+        filter: false
       },
     },
     films: [],
@@ -113,7 +114,8 @@ const reducer = createReducer(initialState, (builder) => {
           appearance: {
             nightTheme: null,
             gallery: 'slider',
-            markup: 'list'
+            markup: 'list',
+            filter: false,
           },
         },
         films: []

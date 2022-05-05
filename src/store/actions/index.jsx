@@ -17,7 +17,8 @@ export const createDocRef = createAsyncThunk('createDocRef', async (user) => {
                 appearance: {
                     nightTheme: null,
                     gallery: 'slider',
-                    markup: 'list'
+                    markup: 'list',
+                    filter: false
                 },
             },
             films: [],

@@ -1,14 +1,14 @@
-import { BrowserRouter } from 'react-router-dom';
 import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import useAuth from './auth';
-import './App.css';
 import Header from './components/Header';
 import AppRouter from './components/AppRouter/AppRouter';
 import { ThemeProvider, Box } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
 import Footer from './components/Footer/Footer';
 import CircularIndeterminate from './components/Loading';
+import './App.css';
 
 const theme = createTheme({
   palette: {

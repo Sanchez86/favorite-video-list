@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { AppBar, Button, Grid, Toolbar, Box, Fab } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import Brightness2Icon from '@material-ui/icons/Brightness2';
+import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import { LOGIN_ROUTE } from '../../utils/consts';
 import { getAuth, signOut } from "firebase/auth";
 import { db } from '../../firebase/firebase';
@@ -24,8 +25,7 @@ const Header = () => {
 
   const user = useSelector(state => state.data);
   const nightTheme = useSelector(state => state.users.settings.appearance.nightTheme);
-  const gallery = useSelector(state => state.users.settings.appearance.gallery);
-  const markup = useSelector(state => state.users.settings.appearance.markup);
+  const appearance = useSelector(state => state.users.settings.appearance);
   const films = useSelector((state) => state.users.films);
 
   const logOut = async () => {
@@ -52,17 +52,17 @@ const Header = () => {
     dispatch(isOpenAddCard());
   }
 
+  const handlerFilter = () => {
+
+  }
+
   useEffect(() => {
     if (nightTheme === null) return;
 
     const setData = async () => {
       await setDoc(doc(db, "users", user.uid), {
         settings: {
-          appearance: {
-            nightTheme: nightTheme,
-            gallery: gallery,
-            markup: markup
-          },
+          appearance,
         },
         films: films,
       })
@@ -102,6 +102,11 @@ const Header = () => {
           </Fab>}
         </Grid>
         <Grid container justifyContent={"flex-end"}>
+          <Box m={0.5}>
+            <Button variant="outlined" color={nightTheme ? "primary" : "secondary"} onClick={handlerFilter}>
+              <FilterAltIcon />
+            </Button>
+          </Box>
           <Box m={0.5}>
             <Button variant="outlined" color={nightTheme ? "primary" : "secondary"} onClick={changeTheme}>
               <Brightness2Icon />

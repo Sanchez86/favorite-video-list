@@ -116,7 +116,7 @@ const Edit = ({ match }) => {
                 category,
                 ganre,
                 filmURL,
-                posterURL: '',
+                posterURL: image,
                 rating,
                 year,
                 id: film.id,

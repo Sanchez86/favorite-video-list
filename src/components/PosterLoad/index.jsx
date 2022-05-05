@@ -7,8 +7,6 @@ import DownloadDoneIcon from '@mui/icons-material/DownloadDone';
 
 const PosterLoad = ({ image, loading, customImageUrl, handleClick, setCustomImageUrl, handleChange }) => {
 
-    console.log('image', image);
-
     return (
         <Box className='img-block'>
 

@@ -35,7 +35,9 @@ const Edit = ({ match }) => {
     const [year, setYear] = useState(film.year);
     const [rating, setRating] = useState(film.rating);
     const [image, setImage] = useState(film.posterURL);
-    const [customImageUrl, setCustomImageUrl] = useState('');
+    const [customImageUrl, setCustomImageUrl] = useState(film.customImageUrl);
+
+    console.log('film', film);
 
     const [isSuccess, setIsSuccess] = useState(false);
 
@@ -73,6 +75,7 @@ const Edit = ({ match }) => {
         setIsLoading(true);
 
         if (typeof image === 'object') {
+
             const storageRef = ref(storage, image.name);
             const uploadTask = uploadBytesResumable(storageRef, image);
 
@@ -95,7 +98,7 @@ const Edit = ({ match }) => {
                                 rating,
                                 year,
                                 id: film.id,
-                                customImageUrl
+                                customImageUrl: ''
                             }
 
                             return filmData;
@@ -113,7 +116,7 @@ const Edit = ({ match }) => {
                 category,
                 ganre,
                 filmURL,
-                posterURL: image,
+                posterURL: '',
                 rating,
                 year,
                 id: film.id,
@@ -124,6 +127,8 @@ const Edit = ({ match }) => {
             setData();
         }
     }
+
+    console.log('customImageUrl', customImageUrl);
 
     return (
         <Container className='edit-film'>
@@ -139,13 +144,15 @@ const Edit = ({ match }) => {
                         setCustomImageUrl={setCustomImageUrl}
                         handleChange={handleChange}
                     />
-
+                    <br />
                     {image ? typeof (image) === 'string' ?
                         <Box className='edit-poster'><img src={image} alt={name} /></Box>
                         :
                         `Имя файла: ${image.name}`
                         :
                         null}
+
+                    {customImageUrl && customImageUrl.length > 0 ? <Box className='edit-poster'><img src={customImageUrl} alt={name} /></Box> : null}
                 </Grid>
 
                 <Grid item xs={12} sm={8} md={8}>

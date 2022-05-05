@@ -11,12 +11,15 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import PublishedWithChangesIcon from '@mui/icons-material/PublishedWithChanges';
 import ClearIcon from '@mui/icons-material/Clear';
 import Grid from '@mui/material/Grid';
+import PosterLoad from '../PosterLoad';
 import './style.css';
 
 const Edit = ({ match }) => {
     const history = useHistory();
     const storage = getStorage();
     const dispatch = useDispatch();
+
+    const [loading, setLoading] = useState(true);
 
     const user = useSelector((state) => state.data);
     const userSettings = useSelector(state => state.users.settings);
@@ -32,8 +35,14 @@ const Edit = ({ match }) => {
     const [year, setYear] = useState(film.year);
     const [rating, setRating] = useState(film.rating);
     const [image, setImage] = useState(film.posterURL);
+    const [customImageUrl, setCustomImageUrl] = useState('');
 
     const [isSuccess, setIsSuccess] = useState(false);
+
+    function handleClick() {
+        setLoading(!loading);
+        setImage(null);
+    }
 
     const handleChange = (e) => {
         if (e.target.files[0]) {
@@ -85,7 +94,8 @@ const Edit = ({ match }) => {
                                 posterURL: url,
                                 rating,
                                 year,
-                                id: film.id
+                                id: film.id,
+                                customImageUrl
                             }
 
                             return filmData;
@@ -106,7 +116,8 @@ const Edit = ({ match }) => {
                 posterURL: image,
                 rating,
                 year,
-                id: film.id
+                id: film.id,
+                customImageUrl
             }
 
             dispatch(updateFilm(filmData));
@@ -119,29 +130,22 @@ const Edit = ({ match }) => {
             <Grid container spacing={{ xs: 2, md: 3 }}>
 
                 <Grid item xs={12} sm={4} md={4}>
-                    <Box>
-                        <Button
-                            variant="contained"
-                            component="label"
-                            className='btn-upload'
-                        >
-                            {image.length === 0 ? 'Загрузить постер' : 'Загрузить новый постер'}
 
-                            <input
-                                type="file"
-                                required
-                                hidden
-                                onChange={handleChange}
-                            />
-                        </Button>
-                    </Box>
-                    {image.name ? image.name :
-                        <>
-                            {image.length === 0 ? 'Постер пока что не загружен'
-                                :
-                                <Box className='edit-poster'><img src={image} alt={name} /></Box>}
-                        </>
-                    }
+                    <PosterLoad
+                        image={image}
+                        loading={loading}
+                        customImageUrl={customImageUrl}
+                        handleClick={handleClick}
+                        setCustomImageUrl={setCustomImageUrl}
+                        handleChange={handleChange}
+                    />
+
+                    {image ? typeof (image) === 'string' ?
+                        <Box className='edit-poster'><img src={image} alt={name} /></Box>
+                        :
+                        `Имя файла: ${image.name}`
+                        :
+                        null}
                 </Grid>
 
                 <Grid item xs={12} sm={8} md={8}>

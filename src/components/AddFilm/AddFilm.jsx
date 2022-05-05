@@ -4,21 +4,18 @@ import { Button, TextField, Box, Typography, Rating, FormControl, Select, MenuIt
 import PublishedWithChangesIcon from '@mui/icons-material/PublishedWithChanges';
 import SendIcon from '@mui/icons-material/Send';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
-import DownloadIcon from '@mui/icons-material/Download';
-import DownloadDoneIcon from '@mui/icons-material/DownloadDone';
-import InsertLinkIcon from '@mui/icons-material/InsertLink';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Switch from '@mui/material/Switch';
 import { doc, setDoc } from "firebase/firestore";
 import { getStorage, ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import { db } from '../../firebase/firebase';
 import { setFilm, isOpenAddCard } from '../../store/actions/films';
 import nanoid from 'nanoid';
+import PosterLoad from '../PosterLoad';
 import './style.css';
 
 const AddFilm = () => {
 
   const [loading, setLoading] = useState(true);
+
   function handleClick() {
     setLoading(!loading);
     setImage(null);
@@ -65,8 +62,6 @@ const AddFilm = () => {
       setImage(e.target.files[0]);
     }
   }
-
-  console.log('isLoading', loading);
 
   const sendData = () => {
     setIsLoading(true);
@@ -162,47 +157,50 @@ const AddFilm = () => {
 
   return (
     <div className={`add-film ${isOpen ? 'active' : null}`}>
-      <Box>
-        <FormControl>
-          <Select
-            style={{ width: '100%', marginBottom: '15px' }}
-            value={category}
-            size="small"
-            fullWidth
-            onChange={(e) => setCategory(e.target.value)}
-            displayEmpty
-            inputProps={{ 'aria-label': 'Without label' }}
-          >
-            <MenuItem value="" disabled>
-              Выберете категорию
-            </MenuItem>
-            <MenuItem value={"Фильмы"}>Фильмы</MenuItem>
-            <MenuItem value={"Сериалы"}>Сериалы</MenuItem>
-            <MenuItem value={"Мультфильмы"}>Мультфильмы</MenuItem>
-            <MenuItem value={"Аниме"}>Аниме</MenuItem>
-          </Select>
-        </FormControl>
-      </Box>
-      <Box>
-        <FormControl>
-          <Select
-            style={{ width: '100%', marginBottom: '15px' }}
-            size="small"
-            value={ganre}
-            fullWidth
-            onChange={(e) => setGanre(e.target.value)}
-            displayEmpty
-            inputProps={{ 'aria-label': 'Without label' }}
-          >
-            <MenuItem value="" disabled>
-              Выберете жанр
-            </MenuItem>
-            <MenuItem value={"Комедии"}>Комедии</MenuItem>
-            <MenuItem value={"Драммы"}>Драммы</MenuItem>
-            <MenuItem value={"Мелодраммы"}>Мелодраммы</MenuItem>
-            <MenuItem value={"Боевики"}>Боевики</MenuItem>
-          </Select>
-        </FormControl>
+      <Box mt={1} display={'flex'} justifyContent={'space-between'} alignItems={'center'}>
+        <Box>
+          <FormControl>
+            <Select
+              style={{ width: '100%', marginBottom: '15px' }}
+              value={category}
+              size="small"
+              fullWidth
+              onChange={(e) => setCategory(e.target.value)}
+              displayEmpty
+              inputProps={{ 'aria-label': 'Without label' }}
+            >
+              <MenuItem value="" disabled>
+                Категория
+              </MenuItem>
+              <MenuItem value={"Фильмы"}>Фильмы</MenuItem>
+              <MenuItem value={"Сериалы"}>Сериалы</MenuItem>
+              <MenuItem value={"Мультфильмы"}>Мультфильмы</MenuItem>
+              <MenuItem value={"Аниме"}>Аниме</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
+        <Box>
+          <FormControl>
+            <Select
+              style={{ width: '100%', marginBottom: '15px' }}
+              size="small"
+              value={ganre}
+              fullWidth
+              onChange={(e) => setGanre(e.target.value)}
+              displayEmpty
+              inputProps={{ 'aria-label': 'Without label' }}
+            >
+              <MenuItem value="" disabled>
+                Жанр
+              </MenuItem>
+              <MenuItem value={"Комедии"}>Комедии</MenuItem>
+              <MenuItem value={"Драммы"}>Драммы</MenuItem>
+              <MenuItem value={"Мелодраммы"}>Мелодраммы</MenuItem>
+              <MenuItem value={"Боевики"}>Боевики</MenuItem>
+              <MenuItem value={"Документальные"}>Документальные</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
       </Box>
       <Box>
         <TextField
@@ -229,91 +227,47 @@ const AddFilm = () => {
           onChange={e => setFilmURL(e.target.value)}
         />
       </Box>
-      <Box component="fieldset" mb={1} borderColor="transparent">
-        <Typography component="legend">Рейтинг</Typography>
-        <Rating
-          style={{ width: '100%', marginBottom: '15px' }}
-          name="simple-controlled"
-          value={rating}
-          onChange={(event, newValue) => {
-            setRating(newValue);
-          }}
-        />
-      </Box>
-      <Box>
-        <TextField
-          style={{ width: '100%', marginBottom: '15px' }}
-          size="small"
-          label="Год"
-          type="number"
-          variant={"outlined"}
-          value={year}
-          name={"setYear"}
-          onChange={e => setYear(e.target.value)}
-        />
-      </Box>
-
-      <Box className='img-block'>
-
-        <FormControlLabel
-          sx={{
-            display: 'block',
-          }}
-          control={
-            <Switch
-              checked={loading}
-              onChange={handleClick}
-              name="loading"
-            />
-          }
-          label={loading ? 'Вставить ссылку' : 'Загрузить картинку'}
-        />
-        <Box>
-          <Button
-            variant="contained"
-            component="label"
-            className='btn-upload'
-            disabled={loading}
-          >
-
-            {image?.name.length > 0 ? <DownloadDoneIcon /> : <DownloadIcon />}
-
-            <input
-              type="file"
-              required
-              hidden
-              onChange={handleChange}
-            />
-          </Button>
-          &nbsp; {image ? `Имя файла: ${image.name}` : null}
+      <Box mt={1} display={'flex'} justifyContent={'space-between'} alignItems={'center'}>
+        <Box component="fieldset" mb={1} borderColor="transparent">
+          <Typography component="legend">Рейтинг</Typography>
+          <Rating
+            style={{ width: '100%', marginBottom: '15px' }}
+            name="simple-controlled"
+            value={rating}
+            onChange={(event, newValue) => {
+              setRating(newValue);
+            }}
+          />
         </Box>
-
-        <Box m={1}>
-          <p>или</p>
-        </Box>
-
         <Box>
           <TextField
-            disabled={!loading}
-            style={{ width: '100%', marginBottom: '15px' }}
             size="small"
-            label="Кастомная ссылка"
-            type="text"
+            label="Год"
+            type="number"
             variant={"outlined"}
-            value={customImageUrl}
-            name={"setCustomImageUrl"}
-            onChange={e => setCustomImageUrl(e.target.value)}
+            value={year}
+            name={"setYear"}
+            onChange={e => setYear(e.target.value)}
           />
         </Box>
       </Box>
 
-      <Box mt={1} display={'flex'} justifyContent={'space-between'}>
+      <PosterLoad
+        image={image}
+        loading={loading}
+        customImageUrl={customImageUrl}
+        handleClick={handleClick}
+        setCustomImageUrl={setCustomImageUrl}
+        handleChange={handleChange}
+      />
+
+      <Box mt={2} display={'flex'} justifyContent={'space-between'}>
         <Button
           className='btn-reset'
           color="secondary"
           variant={"outlined"}
           onClick={hendlerReset}>
-          Очистить все поля &nbsp;
+          Очистить &nbsp;
           <RestartAltIcon />
         </Button>
 
@@ -334,7 +288,7 @@ const AddFilm = () => {
         </Button>
       </Box>
 
-    </div>
+    </div >
 
   );
 }

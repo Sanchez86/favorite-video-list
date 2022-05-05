@@ -27,7 +27,10 @@ import {
   updateFilm
 } from '../actions/films';
 
-import { setNightTheme } from '../actions/userSettings';
+import {
+  setNightTheme,
+  isFilter
+} from '../actions/userSettings';
 
 const initialState = {
   isOpenAddCard: false,
@@ -49,9 +52,10 @@ const initialState = {
 
 const reducer = createReducer(initialState, (builder) => {
   builder
-
+    .addCase(isFilter, (state) => {
+      state.users.settings.appearance.filter = !state.users.settings.appearance.filter;
+    })
     .addCase(updateFilm, (state, action) => {
-      console.log('updateFilm', action.payload);
       const itemIndex = state.users.films.findIndex(film => film.id === action.payload.id);
       const updatedFilms = [
         ...state.users.films.slice(0, itemIndex),

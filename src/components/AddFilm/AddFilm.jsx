@@ -29,11 +29,7 @@ const AddFilm = () => {
   const films = useSelector((state) => state.users.films);
   const user = useSelector((state) => state.data);
 
-  const appearance = useSelector(state => state.users.settings.appearance);
-  // const nightTheme = useSelector(state => state.users.settings.appearance.nightTheme);
-  // const gallery = useSelector(state => state.users.settings.appearance.gallery);
-  // const markup = useSelector(state => state.users.settings.appearance.markup);
-  // const filter = useSelector(state => state.users.settings.appearance.filter);
+  const userSettings = useSelector(state => state.users.settings);
 
   const isOpen = useSelector((state) => state.isOpenAddCard);
 
@@ -128,9 +124,7 @@ const AddFilm = () => {
 
     const setData = async () => {
       await setDoc(doc(db, "users", user.uid), {
-        settings: {
-          appearance,
-        },
+        settings: userSettings,
         films: films,
       }).then(() => setIsLoading(false));
     }

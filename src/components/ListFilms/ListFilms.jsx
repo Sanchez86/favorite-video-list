@@ -10,13 +10,13 @@ import './style.css';
 const ListFilms = () => {
 
   const films = useSelector((state) => state.users.films);
+  const isFilter = useSelector((state) => state.users.settings.appearance.filter);
+
   const [category, setCategory] = useState('');
   const [ganre, setGanre] = useState('');
   const [sort, setSort] = useState(null);
 
   const hendlerSort = () => {
-    console.log('category', category);
-    console.log('ganre', ganre);
 
     setSort(
       films.filter(
@@ -38,7 +38,7 @@ const ListFilms = () => {
   return (
     <>
 
-      <Grid className='filter-block' p={2} container spacing={2}>
+      <Grid className={`filter-block ${isFilter ? 'active' : null} `} p={2} container spacing={2}>
         <Grid m={1}>
           <FormControl>
             <Select

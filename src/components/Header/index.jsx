@@ -17,6 +17,8 @@ import {
 } from '../../store/actions/logOutUser';
 import { isOpenAddCard } from '../../store/actions/films';
 import { setNightTheme } from '../../store/actions/userSettings';
+import { isFilter } from '../../store/actions/userSettings';
+
 import './style.css';
 
 const Header = () => {
@@ -53,7 +55,7 @@ const Header = () => {
   }
 
   const handlerFilter = () => {
-
+    dispatch(isFilter());
   }
 
   useEffect(() => {

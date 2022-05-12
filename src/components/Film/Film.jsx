@@ -26,8 +26,6 @@ const Film = ({ item }) => {
       .catch((e) => console.log('Error', e));
   }
 
-  const name = item?.name?.length > 15 ? item?.name.slice(0, 15) + '...' : item?.name;
-
   return (
     <div className='card'>
       <div className="card-hover">
@@ -78,7 +76,7 @@ const Film = ({ item }) => {
         </div>
       </div>
       <a className='card-link' href={item.filmURL} target='_blank'>
-        {name}
+        {item.name}
       </a>
 
     </div>

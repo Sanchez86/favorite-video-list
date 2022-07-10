@@ -1,5 +1,7 @@
-.login{
-    border: 1px solid #ccc;
+@import '../../styles/';
+
+.login {
+    border: 1px solid $color-gray-light;
     display: flex;
     margin: 0 auto;
     margin-top: 100px;

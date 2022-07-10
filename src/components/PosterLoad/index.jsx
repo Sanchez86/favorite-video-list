@@ -21,7 +21,7 @@ const PosterLoad = ({ image, loading, customImageUrl, handleClick, setCustomImag
                         name="loading"
                     />
                 }
-                label={loading ? 'Вставить ссылку' : 'Загрузить картинку'}
+                label={loading ? 'Вставить ссылку на постер' : 'Загрузить картинку'}
             />
             <Box>
                 <Button
@@ -58,7 +58,7 @@ const PosterLoad = ({ image, loading, customImageUrl, handleClick, setCustomImag
                     disabled={!loading}
                     style={{ width: '100%', marginBottom: '15px' }}
                     size="small"
-                    label="Кастомная ссылка"
+                    label="Кастомная ссылка на постер"
                     type="text"
                     variant={"outlined"}
                     value={customImageUrl}

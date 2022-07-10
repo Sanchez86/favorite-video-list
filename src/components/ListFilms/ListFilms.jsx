@@ -5,7 +5,7 @@ import Grid from '@mui/material/Grid';
 import { Button, FormControl, Select, MenuItem } from '@mui/material';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
-import './style.css';
+import './style.scss';
 
 const ListFilms = () => {
 

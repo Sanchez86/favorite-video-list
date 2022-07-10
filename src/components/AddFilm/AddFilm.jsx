@@ -10,7 +10,7 @@ import { db } from '../../firebase/firebase';
 import { setFilm, isOpenAddCard } from '../../store/actions/films';
 import nanoid from 'nanoid';
 import PosterLoad from '../PosterLoad';
-import './style.css';
+import './style.scss';
 
 const AddFilm = () => {
 
@@ -149,8 +149,8 @@ const AddFilm = () => {
 
   return (
     <div className={`add-film ${isOpen ? 'active' : null}`}>
-      <Box mt={1} display={'flex'} justifyContent={'space-between'} alignItems={'center'}>
-        <Box>
+      <Box mt={1} display={'flex'} alignItems={'center'}>
+        <Box mr={1}>
           <FormControl>
             <Select
               style={{ width: '100%', marginBottom: '15px' }}

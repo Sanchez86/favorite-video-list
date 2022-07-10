@@ -7,7 +7,7 @@ import {
   loadUserDataResponce,
   loadUserDataFailure
 } from '../../store/actions/loadUserData';
-import './style.css';
+import './style.scss';
 
 const Login = () => {
 

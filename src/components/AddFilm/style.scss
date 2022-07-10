@@ -1,3 +1,5 @@
+@import '../../styles/';
+
 .add-film {
     transition: 1s;
     position: absolute;
@@ -5,11 +7,11 @@
     left: 0;
     right: 0;
     z-index: 100;
-    background-color: #fff;
+    background-color: $color-white;
     width: 50%;
     margin: auto;
     padding: 15px;
-    box-shadow: 0px 1px 5px black;
+    box-shadow: 0px 1px 5px $color-black;
 }
 
 .add-film.active {
@@ -17,11 +19,11 @@
 }
 
 .night-theme .add-film {
-    background-color: #2d333b;
+    background-color: $color-gray;
 }
 
 .img-block {
-    border: 1px solid #c4c4c4;
+    border: 1px solid $color-gray-light;
     border-radius: 10px;
     padding: 5px;
 }
@@ -30,19 +32,19 @@
 #root .night-theme .btn-upload,
 #root .night-theme .btn-send,
 #root .night-theme .btn-reset {
-    color: #adbac7;
+    color: $color-gray-light;
     background-color: rgb(55 62 71 / 79%);
     padding: 5px 16px;
     font-size: 14px;
     font-weight: 500;
     line-height: 20px;
-    border: 1px solid #707982;
+    border: 1px solid $color-gray;
     border-radius: 6px;
 }
 
 #root .night-theme input::placeholder,
 #root .night-theme .add-film label {
-    color: #adbac7;
+    color: $color-gray-light;
 }
 
 @media only screen and (max-width: 786px) {

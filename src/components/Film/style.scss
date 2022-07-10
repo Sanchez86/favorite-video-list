@@ -1,3 +1,5 @@
+@import '../../styles/';
+
 .cards {
   display: flex;
   flex-wrap: wrap;
@@ -39,7 +41,7 @@
   line-height: 20px;
   font-weight: 500;
   text-decoration: none;
-  color: #111;
+  color: $color-black;
   margin-top: 5px;
   margin-left: 5px;
   display: block;
@@ -57,7 +59,7 @@
   top: 0;
   bottom: 0;
   left: 0;
-  background-color: #0000008f;
+  background-color: $color-black;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -71,7 +73,7 @@
 }
 
 .card-stars {
-  background-color: #fff;
+  background-color: $color-white;
   border-radius: 10px;
   padding: 5px;
   max-width: 100px;
@@ -89,9 +91,9 @@
   border-radius: 10px;
   margin-top: 5px;
   margin-right: 5px;
-  border: 1px solid #333;
+  border: 1px solid $color-gray;
   padding: 3px 5px;
-  background-color: #fff;
+  background-color: $color-white;
   cursor: pointer;
 
 }

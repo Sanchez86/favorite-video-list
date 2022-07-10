@@ -19,7 +19,7 @@ import { isOpenAddCard } from '../../store/actions/films';
 import { setNightTheme } from '../../store/actions/userSettings';
 import { isFilter } from '../../store/actions/userSettings';
 
-import './style.css';
+import './style.scss';
 
 const Header = () => {
 

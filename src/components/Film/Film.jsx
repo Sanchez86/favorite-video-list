@@ -7,7 +7,7 @@ import { db } from '../../firebase/firebase';
 import { delateFilm } from '../../store/actions/films';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import './style.css';
+import './style.scss';
 
 const Film = ({ item }) => {
 

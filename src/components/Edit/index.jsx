@@ -12,7 +12,7 @@ import PublishedWithChangesIcon from '@mui/icons-material/PublishedWithChanges';
 import ClearIcon from '@mui/icons-material/Clear';
 import Grid from '@mui/material/Grid';
 import PosterLoad from '../PosterLoad';
-import './style.css';
+import './style.scss';
 
 const Edit = ({ match }) => {
     const history = useHistory();

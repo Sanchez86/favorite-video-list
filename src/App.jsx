@@ -8,7 +8,7 @@ import { ThemeProvider, Box } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
 import Footer from './components/Footer/Footer';
 import CircularIndeterminate from './components/Loading';
-import './App.css';
+import './App.scss';
 
 const theme = createTheme({
   palette: {

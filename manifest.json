@@ -1,0 +1,22 @@
+{
+  "background_color": "#ffffff",
+  "description": "Your own collection of links to external video resources",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "FVL",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "Favorite video list",
+  "start_url": "/",
+  "theme_color": "#000000",
+  "categories": [],
+  "screenshots": [],
+  "icons": [
+    {
+      "src": "public/ico/favicon.ico",
+      "type": "image/x-icon"
+    }
+  ],
+  "shortcuts": [],
+  "lang": "en"
+}

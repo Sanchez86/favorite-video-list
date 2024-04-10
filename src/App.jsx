@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import useAuth from './auth';
 import Header from './components/Header';
 import AppRouter from './components/AppRouter/AppRouter';
@@ -8,6 +8,7 @@ import { ThemeProvider, Box } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
 import Footer from './components/Footer/Footer';
 import CircularIndeterminate from './components/Loading';
+import { isOpenAddCard } from './store/actions/films';
 import './App.scss';
 
 const theme = createTheme({
@@ -28,8 +29,19 @@ function App() {
   const isLoading = useSelector(state => state.isLoading);
   const user = useAuth();
 
+  const isOpenedAddCard = useSelector((state) => state.isOpenAddCard);
+  const dispatch = useDispatch();
+  const handlerAddCard = () => {
+    dispatch(isOpenAddCard());
+  }
+
   return (
-    <div className={`App ${nightTheme ? 'night-theme' : null}`}>
+    <div
+      className={`App ${nightTheme && 'night-theme'}`}
+    >
+      {isOpenedAddCard && (
+        <div className='openedAddCardActive' onClick={handlerAddCard}></div>
+      )}
       <ThemeProvider theme={theme}>
         <BrowserRouter>
 
